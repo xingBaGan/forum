@@ -6,6 +6,7 @@
 
 <script>
 import CategoryListItem from "@comp/CategoryListItem";
+import { mapGetters } from "vuex";
 export default {
   components: {
     CategoryListItem
@@ -17,13 +18,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      keyWithCategories: "categoriesWithId"
+    }),
     categories() {
       return this.$store.state.categories;
-    },
-    keyWithCategories() {
-      return Object.entries(this.categories).map(item => {
-        return { id: item[0], ...item[1] };
-      });
     },
     category() {
       return this.keyWithCategories.filter(item => item.id === this.id)[0];

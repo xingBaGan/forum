@@ -17,7 +17,7 @@
 
 <script>
 import ThreadList from "@comp/ThreadList";
-
+import { mapGetters } from "vuex";
 export default {
   components: {
     ThreadList
@@ -29,13 +29,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      threadsWithKey: "threadsWithId"
+    }),
     forum() {
       return this.$store.state.forums[this.id];
-    },
-    threadsWithKey() {
-      return Object.entries(this.$store.state.threads).map(item => {
-        return { id: item[0], ...item[1] };
-      });
     },
     threads() {
       return this.threadsWithKey.filter(thread => thread.forumId === this.id);

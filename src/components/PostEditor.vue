@@ -34,13 +34,10 @@ export default {
     addPost() {
       let post = {
         text: this.newPostTest,
-        publishedAt: Math.floor(Date.now() / 1000),
-        threadId: this.threadId,
-        userId: "7uVPJS9GHoftN58Z2MXCYDqmNAh2"
+        threadId: this.threadId
       };
-
       this.newPostTest = "";
-      this.$emit("save", { post });
+      this.$store.dispatch("createPost", post);
     }
   }
 };

@@ -1,6 +1,7 @@
 <template>
   <div class="col-full">
-    <h1>welcome to the forum</h1>
+    <navbar/>
+    <h1 class="push-top">welcome to the forum</h1>
     <!-- <forum-list :forums="keyWithForums"></forum-list> -->
     <category-list :categories="categories"></category-list>
   </div>
@@ -8,7 +9,7 @@
 
 <script>
 import CategoryList from "@/components/CategoryList";
-
+import Navbar from "@comp/TheNavbar";
 export default {
   name: "HelloWorld",
   computed: {
@@ -17,7 +18,8 @@ export default {
     }
   },
   components: {
-    CategoryList
+    CategoryList,
+    Navbar
   }
 };
 </script>

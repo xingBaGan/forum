@@ -9,6 +9,7 @@
 
 <script>
 import forumList from "./ForumList";
+import { mapGetters } from "vuex";
 export default {
   components: {
     forumList
@@ -21,13 +22,11 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      forumsWithKey: "forumsWithId"
+    }),
     forums() {
       return this.$store.state.forums;
-    },
-    forumsWithKey() {
-      return Object.entries(this.forums).map(item => {
-        return { id: item[0], ...item[1] };
-      });
     }
   },
   methods: {

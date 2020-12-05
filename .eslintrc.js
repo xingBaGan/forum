@@ -27,6 +27,7 @@ module.exports = {
     'semi': 0,
     'quotes': [0, "double", { "avoidEscape": true }],
     'space-before-function-paren': 0,
+    "spaced-comment": 0,
 
   }
 }

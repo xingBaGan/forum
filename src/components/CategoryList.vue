@@ -1,7 +1,7 @@
 <template>
   <div>
     <category-list-item
-      v-for="categoryItem in keyWithCategories"
+      v-for="categoryItem in CategoriesWithId"
       :key="categoryItem.name"
       :category="categoryItem"
     />
@@ -10,6 +10,7 @@
 
 <script>
 import CategoryListItem from "@comp/CategoryListItem";
+import { mapGetters } from "vuex";
 export default {
   components: {
     CategoryListItem
@@ -21,11 +22,9 @@ export default {
     }
   },
   computed: {
-    keyWithCategories() {
-      return Object.entries(this.categories).map(item => {
-        return { id: item[0], ...item[1] };
-      });
-    }
+    ...mapGetters({
+      CategoriesWithId: "categoriesWithId"
+    })
   }
 };
 </script>

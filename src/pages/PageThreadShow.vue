@@ -12,12 +12,13 @@
         >3 reples by 3 contributors</span>
       </p>
       <post-list :posts="posts"></post-list>
-      <post-editor @save="addPost" :threadId="id"/>
+      <post-editor :threadId="id"/>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import PostEditor from "@comp/PostEditor";
 import PostList from "@comp/PostList";
 export default {
@@ -31,31 +32,19 @@ export default {
       type: String
     }
   },
-  data() {
-    return {
-      thread: this.$store.state.threads[this.id],
-      users: this.$store.state.users
-    };
-  },
   computed: {
+    ...mapGetters(["postsWithId"]),
+    thread() {
+      return this.$store.state.threads[this.id];
+    },
     posts() {
       let postIds = Object.keys(this.thread.posts);
-      return Object.entries(this.$store.state.posts).filter(([key, value]) => {
-        return postIds.includes(key);
+      return this.postsWithId.filter(post => {
+        return postIds.includes(post.id);
       });
     },
     user() {
       return this.$store.state.users[this.thread.userId];
-    }
-  },
-  methods: {
-    addPost(eventData) {
-      // console.log(eventData);
-      let postId = "greatPost" + Math.random();
-      let post = eventData.post;
-      this.$set(this.$store.state.posts, postId, post);
-      this.$set(this.thread.posts, postId, postId);
-      this.$set(this.$store.state.users[post.userId].posts, postId, postId);
     }
   }
 };
