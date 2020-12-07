@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { countObjectProperties } from "@/utils";
 export default {
   props: {
     thread: {
@@ -38,7 +37,7 @@ export default {
   },
   computed: {
     repliesCount() {
-      return countObjectProperties(this.thread.posts);
+      return this.$store.getters.threadRepliesCount(this.thread.id);
     },
     user() {
       return this.$store.state.users[this.thread.userId];

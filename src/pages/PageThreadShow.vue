@@ -16,7 +16,7 @@
         <span
           class="hide-mobile text-faded text-small"
           style="float:right;margin-top:2px;"
-        >3 reples by 3 contributors</span>
+        >{{repliesCount}} reples by {{contributorsCount}} contributors</span>
       </p>
       <post-list :posts="posts"></post-list>
       <post-editor :threadId="id"/>
@@ -52,6 +52,21 @@ export default {
     },
     user() {
       return this.$store.state.users[this.thread.userId];
+    },
+    repliesCount() {
+      return this.$store.getters.threadRepliesCount(this.posts[0].threadId);
+    },
+    contributorsCount() {
+      //find the repiles
+      let repiles = Object.keys(this.thread.posts)
+        .filter(postId => postId !== this.thread.firstPostId)
+        .map(postId => this.$store.state.posts[postId]);
+      // get the user ids
+      const userIds = repiles.map(post => post.userId);
+      //count the unique ids
+      return userIds.filter((item, index) => {
+        return userIds.indexOf(item) === index;
+      }).length;
     }
   }
 };
