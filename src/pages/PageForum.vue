@@ -6,7 +6,10 @@
           <h1>{{forum.name}}</h1>
           <p class="text-lead">{{forum.description}}</p>
         </div>
-        <a href="" class="btn-green btn-small">start a thread</a>
+        <router-link
+          :to="{name:'ThreadCreate',params:{forumId:this.forum.id}}"
+          class="btn-green btn-small"
+        >start a thread</router-link>
       </div>
     </div>
     <div class="col-full push-top">
@@ -30,10 +33,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      threadsWithKey: "threadsWithId"
+      threadsWithKey: "threadsWithId",
+      forumsWithId: "forumsWithId"
     }),
     forum() {
-      return this.$store.state.forums[this.id];
+      return this.forumsWithId.filter(forum => forum.id === this.id)[0];
     },
     threads() {
       return this.threadsWithKey.filter(thread => thread.forumId === this.id);

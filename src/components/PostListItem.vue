@@ -4,7 +4,7 @@
       <div class="user-info">
         <a href="#" class="user-name">{{user.name}}</a>
         <img href="#" class="avatar-large" :src="user.avatar" alt="">
-        <a href="" class="desktop-only text-small">{{userPostCount}} posts</a>
+        <p href="" class="desktop-only text-small">{{userPostCount}} posts</p>
       </div>
       <div class="post-content">
         <div>{{post.text}}</div>
