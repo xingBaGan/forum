@@ -29,20 +29,26 @@
 </template>
 
 <script>
-import { countObjectProperties } from "@/utils";
 export default {
   props: {
     user: {
       required: true,
-      type: Object
+      type: Object,
+      validator: obj => {
+        let hasId = obj.id;
+        if (!hasId) {
+          console.error("the user must has `Id` property");
+        }
+        return hasId;
+      }
     }
   },
   computed: {
     userThreadsCount() {
-      return countObjectProperties(this.user.threads);
+      return this.$store.getters.userThreadsCount(this.user.id);
     },
     userPostsCount() {
-      return countObjectProperties(this.user.posts);
+      return this.$store.getters.userPostsCount(this.user.id);
     }
   }
 };

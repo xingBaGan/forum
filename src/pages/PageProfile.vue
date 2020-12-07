@@ -35,7 +35,7 @@ export default {
     }),
     userPosts() {
       if (this.user.posts) {
-        return Object.values(this.$store.state.posts).filter(
+        return this.$store.getters.postsWithId.filter(
           post => post.userId === this.user.id
         );
       }
