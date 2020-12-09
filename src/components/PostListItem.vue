@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <div class="user-info">
+    <div class="user-info" v-if="user">
       <a href="#" class="user-name">{{user.name}}</a>
       <img href="#" class="avatar-large" :src="user.avatar" alt="">
       <p href="" class="desktop-only text-small">{{userPostCount}} posts</p>

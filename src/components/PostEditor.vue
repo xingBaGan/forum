@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     threadId: {
@@ -40,6 +41,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["createPost", "updatePost"]),
     save() {
       (this.isUpdate ? this.update() : this.create()).then(postId => {
         this.$emit("save", { postId });
@@ -51,14 +53,14 @@ export default {
         threadId: this.threadId
       };
       this.newPostTest = "";
-      return this.$store.dispatch("createPost", post);
+      return this.createPost(post);
     },
     update() {
       const payload = {
         id: this.post.id,
         text: this.newPostTest
       };
-      return this.$store.dispatch("updatePost", payload);
+      return this.updatePost(payload);
     },
     cancel() {
       this.$emit("cancel");

@@ -8,7 +8,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  beforeCreate() {
+    this.$emit("ready");
+  }
+};
 </script>
 
 <style  module>

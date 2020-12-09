@@ -1,8 +1,8 @@
 
 function OBTreeToArrayWithId(objList) {
-  return Object.entries(objList).map(item => {
+  return objList ? Object.entries(objList).map(item => {
     return { id: item[0], ...item[1] };
-  });
+  }) : [];
 }
 const countObjectProperties = obj => {
   if (typeof obj === 'object') {

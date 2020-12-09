@@ -1,5 +1,5 @@
 <template>
-  <header class="header" id="header">
+  <header class="header" id="header" v-if="user">
     <router-link :to="{name:'Home'}" class="logo">
       <img src="../assets/img/vueschool-logo.svg" alt="">
     </router-link>
@@ -29,6 +29,9 @@ export default {
     ...mapGetters({
       user: "authUser"
     })
+  },
+  created() {
+    this.$store.dispatch("fetchUser", { id: this.$store.state.authId });
   }
 };
 </script>

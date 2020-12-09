@@ -1,5 +1,5 @@
 <template>
-  <div class="thread">
+  <div class="thread" v-if="user">
     <div>
       <p>
         <router-link :to="`/thread/${id}`">{{thread.title}}</router-link>
@@ -42,6 +42,9 @@ export default {
     user() {
       return this.$store.state.users[this.thread.userId];
     }
+  },
+  mounted() {
+    this.$store.dispatch("fetchUser", { id: this.thread.userId });
   }
 };
 </script>

@@ -1,33 +1,32 @@
 <template>
-  <div>
-    <div class="col-large push-top">
-      <h1>
-        {{thread.title}}
-        <router-link
-          :to="{name:'ThreadEdit',params:{id:this.id}}"
-          class="btn-green btn-small"
-          tag="button"
-        >Edit the thread</router-link>
-      </h1>
-      <p>
-        By
-        <a href="#" class="link-unstyled">{{user.name}}</a>,
-        <AppDate :timestamp="thread.publishedAt"/>
-        <span
-          class="hide-mobile text-faded text-small"
-          style="float:right;margin-top:2px;"
-        >{{repliesCount}} reples by {{contributorsCount}} contributors</span>
-      </p>
-      <post-list :posts="posts"></post-list>
-      <post-editor :threadId="id"/>
+  <div class="col-large push-top" v-if="asyncDataStatus_ready">
+    <h1>
+      {{thread.title}}
+      <router-link
+        :to="{name:'ThreadEdit',params:{id:this.id}}"
+        class="btn-green btn-small"
+        tag="button"
+      >Edit the thread</router-link>
+    </h1>
+    <div>
+      By
+      <a href="#" class="link-unstyled">{{user.name}}</a>,
+      <AppDate :timestamp="thread.publishedAt"/>
+      <span
+        class="hide-mobile text-faded text-small"
+        style="float:right;margin-top:2px;"
+      >{{repliesCount}} reples by {{contributorsCount}} contributors</span>
     </div>
+    <post-list :posts="posts"></post-list>
+    <post-editor :threadId="id"/>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import PostEditor from "@comp/PostEditor";
 import PostList from "@comp/PostList";
+import asyncDataStatus from "@/mixins/asyncDataStatus";
 export default {
   components: {
     PostList,
@@ -39,6 +38,7 @@ export default {
       type: String
     }
   },
+  mixins: [asyncDataStatus],
   computed: {
     ...mapGetters(["postsWithId"]),
     thread() {
@@ -51,10 +51,13 @@ export default {
       });
     },
     user() {
-      return this.$store.state.users[this.thread.userId];
+      return this.thread && this.$store.state.users[this.thread.userId];
     },
     repliesCount() {
-      return this.$store.getters.threadRepliesCount(this.posts[0].threadId);
+      return (
+        this.posts[0] &&
+        this.$store.getters.threadRepliesCount(this.posts[0].threadId)
+      );
     },
     contributorsCount() {
       //find the repiles
@@ -62,12 +65,32 @@ export default {
         .filter(postId => postId !== this.thread.firstPostId)
         .map(postId => this.$store.state.posts[postId]);
       // get the user ids
-      const userIds = repiles.map(post => post.userId);
+      const userIds = repiles.map(post => post && post.userId);
       //count the unique ids
       return userIds.filter((item, index) => {
         return userIds.indexOf(item) === index;
       }).length;
     }
+  },
+  methods: {
+    ...mapActions(["fetchThread", "fetchUser", "fetchPosts"])
+  },
+  created() {
+    this.fetchThread({ id: this.id }).then(thread => {
+      //fetch user
+      this.fetchUser({ id: thread.userId });
+      let repiles = Object.keys(this.thread.posts);
+      this.fetchPosts({ ids: repiles }).then(posts => {
+        Promise.all(
+          posts.map(post => {
+            //fetch user
+            this.fetchUser({ id: post.userId });
+          })
+        ).then(() => {
+          this.asyncDataStatus_fetched();
+        });
+      });
+    });
   }
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
-  <div class="col-full">
-    <navbar/>
+  <div class="col-full" v-if="asyncDataStatus_ready">
     <h1 class="push-top">welcome to the forum</h1>
     <!-- <forum-list :forums="keyWithForums"></forum-list> -->
     <category-list :categories="categories"></category-list>
@@ -8,18 +7,35 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import CategoryList from "@/components/CategoryList";
-import Navbar from "@comp/TheNavbar";
+import asyncDataStatus from "@/mixins/asyncDataStatus";
 export default {
-  name: "HelloWorld",
+  name: "Forum",
+  mixins: [asyncDataStatus],
   computed: {
     categories() {
       return this.$store.state.categories;
     }
   },
   components: {
-    CategoryList,
-    Navbar
+    CategoryList
+  },
+  methods: {
+    ...mapActions(["fetchCategories", "fetchForums"])
+  },
+  created() {
+    this.fetchCategories().then(categories => {
+      Promise.all(
+        categories.map(category =>
+          this.fetchForums({
+            ids: Object.keys(category.forums)
+          })
+        )
+      ).then(() => {
+        this.asyncDataStatus_fetched();
+      });
+    });
   }
 };
 </script>
