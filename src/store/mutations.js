@@ -19,6 +19,9 @@ export default {
   setThread(state, { thread, threadId }) {
     Vue.set(state.threads, threadId, thread)
   },
+  setAuthId(state, id) {
+    state.authId = id
+  },
   setItem(state, { resource, id, item }) {
     //posts,users,threads
     Vue.set(state[resource], id, item);

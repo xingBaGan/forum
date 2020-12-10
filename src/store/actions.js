@@ -43,8 +43,48 @@ export default {
       })
     });
   },
+  createUser({ state, commit }, { id, email, name, username, password, avatar = null }) {
+    return new Promise((resolve, reject) => {
+      const registeredAt = Math.floor(Date.now() / 1000)
+      const usernameLower = username.toLowerCase()
+      email = email.toLowerCase()
+      const user = { avatar, email, name, username, password, usernameLower, registeredAt }
+      // const userId = firebase.database().ref('users').push().key
+      // console.log(id)
+      firebase.database().ref('users').child(id).set(user)
+        .then(() => {
+          commit('setItem', { resource: 'users', id: id, item: user })
+          resolve(state.users[id])
+        })
+    })
+  },
   updateUser({ commit }, user) {
     commit('setUser', { userId: user.id, user })
+  },
+  fetchAuthUser({ dispatch, commit }) {
+    const userId = firebase.auth().currentUser.uid
+    console.log("userId" + userId)
+    if (!userId) return null;
+    return new Promise((resolve, reject) => {
+      // check if user exists in the database
+      firebase.database().ref('users').child(userId).once('value', snapshot => {
+        if (snapshot.exists()) {
+          return dispatch('fetchUser', { id: userId })
+            .then(user => {
+              commit('setAuthId', userId)
+              resolve(user)
+            })
+        } else {
+          resolve(null)
+        }
+      })
+    })
+  },
+  registerUserWithEmailAndPassword({ dispatch }, { email, name, username, password, avatar = null }) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(data => {
+        return dispatch("createUser", { id: data.user.uid, email, name, username, password, avatar })
+      })
   },
   createThread({ commit, state, dispatch }, { text, title, forumId }) {
     return new Promise((resolve, reject) => {
@@ -122,6 +162,14 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    })
+  },
+  signInWithEmailAndPassword(context, { email, password }) {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+  },
+  signOut({ commit }) {
+    return firebase.auth().signOut().then(() => {
+      commit('setAuthId', null)
     })
   },
   fetchItems: ({ dispatch }, { ids, emoji, resource }) => Promise.all(ids.map(id => dispatch('fetchItem', { id, resource, emoji }))),

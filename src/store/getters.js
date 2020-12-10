@@ -2,7 +2,7 @@ import { OBTreeToArrayWithId, countObjectProperties } from '@/utils'
 export default {
   authUser(state, getters) {
     // return state.users[state.authId]
-    return getters.usersWithId.filter(item => item.id === state.authId)[0]
+    return state.authId ? getters.usersWithId.filter(item => item.id === state.authId)[0] : null;
   },
   categoriesWithId(state) {
     return OBTreeToArrayWithId(state.categories);

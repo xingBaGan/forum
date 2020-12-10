@@ -122,6 +122,9 @@ export default {
     cancel() {
       this.$router.push({ name: "Profile" });
     }
+  },
+  mounted() {
+    this.$emit("ready");
   }
 };
 </script>

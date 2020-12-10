@@ -8,6 +8,8 @@ import Category from '@/pages/PageCategory'
 import Profile from '@/pages/PageProfile'
 import ThreadCreate from '@/pages/PageThreadCreate'
 import ThreadEdit from '@/pages/PageThreadEdit'
+import Register from '@/pages/PageRegister'
+import Login from '@/pages/PageSignIn'
 
 Vue.use(Router)
 
@@ -59,6 +61,16 @@ export default new Router({
       name: 'ThreadEdit',
       component: ThreadEdit,
       props: true
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '*',
