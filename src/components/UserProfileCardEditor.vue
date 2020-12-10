@@ -116,10 +116,13 @@ export default {
   methods: {
     save() {
       //avoid the activeUser in $set bind to the $store.state reactive.
-      this.$store.dispatch("updateUser", { ...this.activeUser });
-      this.$router.push({ name: "Profile" });
+      this.$store.dispatch("updateUser", { ...this.activeUser }).then(() => {
+        this.$emit("ready");
+        this.$router.push({ name: "Profile" });
+      });
     },
     cancel() {
+      this.$emit("ready");
       this.$router.push({ name: "Profile" });
     }
   },

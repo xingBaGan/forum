@@ -18,7 +18,11 @@
       >{{repliesCount}} reples by {{contributorsCount}} contributors</span>
     </div>
     <post-list :posts="posts"></post-list>
-    <post-editor :threadId="id"/>
+    <post-editor :threadId="id" v-if="authUser"/>
+    <div v-else class="text-center" style="mrgin-bottom:50px;">
+      <router-link :to="{name:'Login',query:{redirectTo:$route.path}}">Sign in</router-link>&nbsp;or&nbsp;
+      <router-link :to="{name:'Register',query:{redirectTo:$route.path}}">Register</router-link>to post a reply
+    </div>
   </div>
 </template>
 
@@ -40,7 +44,7 @@ export default {
   },
   mixins: [asyncDataStatus],
   computed: {
-    ...mapGetters(["postsWithId"]),
+    ...mapGetters(["postsWithId", "authUser"]),
     thread() {
       return this.$store.state.threads[this.id];
     },

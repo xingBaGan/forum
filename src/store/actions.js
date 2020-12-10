@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import 'firebase/firebase-database'
+import { removeEmptyProperties } from '@/utils'
 export default {
   createPost({ state, commit }, post) {
     let postId = firebase.database().ref('posts').push().key;
@@ -59,7 +60,22 @@ export default {
     })
   },
   updateUser({ commit }, user) {
-    commit('setUser', { userId: user.id, user })
+    const updates = {
+      avatar: user.avatar,
+      username: user.username,
+      name: user.name,
+      bio: user.bio,
+      website: user.website,
+      email: user.email,
+      location: user.location
+    }
+    return new Promise((resolve, reject) => {
+      firebase.database().ref('users').child(user['id']).update(removeEmptyProperties(updates))
+        .then(() => {
+          commit('setUser', { userId: user['id'], user })
+          resolve(user)
+        })
+    })
   },
   fetchAuthUser({ dispatch, commit }) {
     const userId = firebase.auth().currentUser.uid
@@ -77,6 +93,17 @@ export default {
         } else {
           resolve(null)
         }
+      })
+    })
+  },
+  initAuthentication({ dispatch }) {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged(user => {
+        console.log('👣 the user has changed')
+        if (user) {
+          dispatch('fetchAuthUser')
+        }
+        resolve(user)
       })
     })
   },

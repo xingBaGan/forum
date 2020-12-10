@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
 import Home from '@/pages/PageHome'
 import ThreadShow from '@/pages/PageThreadShow'
 import PageNotFound from '@/pages/PageNotFound'
@@ -13,7 +14,7 @@ import Login from '@/pages/PageSignIn'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -22,12 +23,14 @@ export default new Router({
     }, {
       path: '/profile',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      meta: { requiredAuth: true }
     },
     {
       path: '/profile/edit',
       name: 'ProfileEdit',
       component: Profile,
+      meta: { requiredAuth: true },
       props: {
         edit: true
       }
@@ -48,6 +51,7 @@ export default new Router({
       path: '/thread/create/:forumId',
       name: 'ThreadCreate',
       component: ThreadCreate,
+      meta: { requiredAuth: true },
       props: true
     },
     {
@@ -60,17 +64,20 @@ export default new Router({
       path: '/thread/:id/edit',
       name: 'ThreadEdit',
       component: ThreadEdit,
-      props: true
+      props: true,
+      meta: { requiredAuth: true }
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: { requiredGuest: true }
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { requiredGuest: true }
     },
     {
       path: '*',
@@ -80,3 +87,28 @@ export default new Router({
   ],
   mode: 'history'
 })
+
+router.beforeEach((to, from, next) => {
+  console.log(`🚦 navigating to ${to.name} from ${from.name}`)
+  store.dispatch('initAuthentication').then(user => {
+    if (to.matched.some(route => route.meta.requiredAuth)) {
+      //to.matched.some(route=>route.meta.requiredAuth) 对匹配 这个的进行检查，而不是对他的子路由设置 meta
+      //auth the user
+      if (user) {
+        next();
+      } else {
+        next({ name: "Login", query: { redirectTo: to.path } });
+      }
+    } else if (to.matched.some(route => route.meta.requiredGuest)) {
+      if (!user) {
+        next();
+      } else {
+        next({ name: "Home" });
+      }
+    } else {
+      next()
+    }
+  })
+})
+
+export default router;

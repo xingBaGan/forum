@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-grid">
+  <div class="flex-grid" v-if="asyncDataStatus_ready">
     <user-profile-card v-if="!edit" :user="user"/>
-    <user-profile-card-editor v-else :user="user"/>
+    <user-profile-card-editor v-else :user="user" @ready="asyncDataStatus_fetched();"/>
     <div class="col-7 push-top">
       <div class="profile-header">
         <span class="text-lead">{{user.username}}'s recent activity</span>
@@ -18,6 +18,7 @@ import { mapGetters } from "vuex";
 import PostList from "@comp/PostList";
 import UserProfileCard from "@comp/UserProfileCard";
 import UserProfileCardEditor from "@comp/UserProfileCardEditor";
+import asyncData from "@/mixins/asyncDataStatus";
 export default {
   components: {
     PostList,
@@ -29,6 +30,7 @@ export default {
       type: Boolean
     }
   },
+  mixins: [asyncData],
   computed: {
     ...mapGetters({
       user: "authUser"
@@ -42,7 +44,13 @@ export default {
     }
   },
   beforeCreate() {
-    this.$emit("ready");
+    this.$store.dispatch("fetchAuthUser").then(user => {
+      this.$store
+        .dispatch("fetchPosts", { ids: Object.keys(user.posts) })
+        .then(() => {
+          this.asyncDataStatus_fetched();
+        });
+    });
   }
 };
 </script>

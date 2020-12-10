@@ -11,7 +11,6 @@ export default new Vuex.Store({
     // ...sourceDate,
     users: {},
     forums: {},
-    threads: {},
     posts: {},
     categories: {},
     authId: null
