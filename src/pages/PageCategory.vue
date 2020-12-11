@@ -20,7 +20,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters("categories", {
       keyWithCategories: "categoriesWithId"
     }),
     categories() {
@@ -31,7 +31,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchCategory", "fetchForums"])
+    ...mapActions("categories", ["fetchCategory"]),
+    ...mapActions("forums", ["fetchForums"])
   },
   created() {
     this.fetchCategory({ id: this.id })

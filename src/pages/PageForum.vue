@@ -35,19 +35,21 @@ export default {
   },
   mixins: [asyncDataStatus],
   computed: {
-    ...mapGetters({
-      threadsWithKey: "threadsWithId",
+    ...mapGetters("forums", {
       forumsWithId: "forumsWithId"
     }),
+    ...mapGetters("threads", ["threadsWithId"]),
     forum() {
       return this.forumsWithId.filter(forum => forum.id === this.id)[0];
     },
     threads() {
-      return this.threadsWithKey.filter(thread => thread.forumId === this.id);
+      return this.threadsWithId.filter(thread => thread.forumId === this.id);
     }
   },
   methods: {
-    ...mapActions(["fetchForum", "fetchThreads", "fetchUser"])
+    ...mapActions("threads", ["fetchThreads"]),
+    ...mapActions("users", ["fetchUser"]),
+    ...mapActions("forums", ["fetchForum"])
   },
   created() {
     this.fetchForum({ id: this.id }).then(forum => {

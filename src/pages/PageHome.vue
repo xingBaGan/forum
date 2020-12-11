@@ -22,10 +22,11 @@ export default {
     CategoryList
   },
   methods: {
-    ...mapActions(["fetchCategories", "fetchForums"])
+    ...mapActions("categories", ["fetchAllCategories"]),
+    ...mapActions("forums", ["fetchForums"])
   },
   created() {
-    this.fetchCategories().then(categories => {
+    this.fetchAllCategories().then(categories => {
       Promise.all(
         categories.map(category =>
           this.fetchForums({

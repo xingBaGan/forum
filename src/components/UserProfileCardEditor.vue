@@ -116,18 +116,18 @@ export default {
   methods: {
     save() {
       //avoid the activeUser in $set bind to the $store.state reactive.
-      this.$store.dispatch("updateUser", { ...this.activeUser }).then(() => {
-        this.$emit("ready");
-        this.$router.push({ name: "Profile" });
-      });
+      this.$store
+        .dispatch("users/updateUser", { ...this.activeUser })
+        .then(() => {
+          this.$router.push({ name: "Profile", query: { back: true } });
+        });
     },
     cancel() {
-      this.$emit("ready");
-      this.$router.push({ name: "Profile" });
+      this.$router.push({ name: "Profile", query: { back: true } });
     }
   },
   mounted() {
-    this.$emit("ready");
+    this.$emit("child-ready");
   }
 };
 </script>

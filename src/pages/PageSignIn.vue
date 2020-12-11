@@ -43,7 +43,7 @@ export default {
       // this.$v.form.$touch();
       // if (!this.$v.form.$invalid) {
       this.$store
-        .dispatch("signInWithEmailAndPassword", {
+        .dispatch("auth/signInWithEmailAndPassword", {
           email: this.form.email,
           password: this.form.password
         })
@@ -53,7 +53,7 @@ export default {
     },
     signInWithGoogle() {
       this.$store
-        .dispatch("signInWithGoogle")
+        .dispatch("auth/signInWithGoogle")
         .then(() => this.successRedirect())
         .catch(error => alert("🤷‍️" + error.message));
     },

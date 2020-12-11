@@ -29,7 +29,7 @@
             </li>
             <li class="dropdown-menu-item">
               <a
-                @click.prevent="$store.dispatch('signOut').then(()=>{$router.push({name:'Home'})})"
+                @click.prevent="$store.dispatch('auth/signOut').then(()=>{$router.push({name:'Home'})})"
               >Sign Out</a>
             </li>
           </ul>
@@ -56,13 +56,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters("auth", {
       user: "authUser"
     })
   },
   created() {
     if (!this.$store.state.authId) return;
-    this.$store.dispatch("fetchUser", { id: this.$store.state.authId });
+    this.$store.dispatch("users/fetchUser", { id: this.$store.state.authId });
   }
 };
 </script>

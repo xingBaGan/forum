@@ -10,6 +10,8 @@ import 'firebase/firebase-database'
 Vue.config.productionTip = false
 Vue.component('AppDate', AppDate)
 /* eslint-disable no-new */
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 var firebaseConfig = {
   apiKey: "AIzaSyBmjJWvDgEuRWryS2f9NZzDRiXkZpQASbc",
@@ -37,7 +39,3 @@ new Vue({
   store,
   components: { App }
 })
-
-  // beforeCreate() {
-  //   store.dispatch('fetchUser', { id: store.state.authId })
-  // }

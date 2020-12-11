@@ -44,9 +44,10 @@ export default {
   },
   mixins: [asyncDataStatus],
   computed: {
-    ...mapGetters(["postsWithId", "authUser"]),
+    ...mapGetters("posts", ["postsWithId"]),
+    ...mapGetters("auth", ["authUser"]),
     thread() {
-      return this.$store.state.threads[this.id];
+      return this.$store.state.threads.items[this.id];
     },
     posts() {
       let postIds = Object.keys(this.thread.posts);
@@ -55,12 +56,14 @@ export default {
       });
     },
     user() {
-      return this.thread && this.$store.state.users[this.thread.userId];
+      return this.thread && this.$store.state.users.items[this.thread.userId];
     },
     repliesCount() {
       return (
         this.posts[0] &&
-        this.$store.getters.threadRepliesCount(this.posts[0].threadId)
+        this.$store.getters["threads/threadRepliesCount"](
+          this.posts[0].threadId
+        )
       );
     },
     contributorsCount() {
@@ -77,7 +80,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchThread", "fetchUser", "fetchPosts"])
+    ...mapActions("threads", ["fetchThread"]),
+    ...mapActions("users", ["fetchUser"]),
+    ...mapActions("posts", ["fetchPosts"])
   },
   created() {
     this.fetchThread({ id: this.id }).then(thread => {

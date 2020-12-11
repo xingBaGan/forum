@@ -37,14 +37,14 @@ export default {
   },
   computed: {
     repliesCount() {
-      return this.$store.getters.threadRepliesCount(this.thread.id);
+      return this.$store.getters["threads/threadRepliesCount"](this.thread.id);
     },
     user() {
-      return this.$store.state.users[this.thread.userId];
+      return this.$store.state.users.items[this.thread.userId];
     }
   },
   mounted() {
-    this.$store.dispatch("fetchUser", { id: this.thread.userId });
+    this.$store.dispatch("users/fetchUser", { id: this.thread.userId });
   }
 };
 </script>

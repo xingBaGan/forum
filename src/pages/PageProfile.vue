@@ -1,7 +1,7 @@
 <template>
   <div class="flex-grid" v-if="asyncDataStatus_ready">
     <user-profile-card v-if="!edit" :user="user"/>
-    <user-profile-card-editor v-else :user="user" @ready="asyncDataStatus_fetched();"/>
+    <user-profile-card-editor v-else :user="user" @child-ready="asyncDataStatus_fetched"/>
     <div class="col-7 push-top">
       <div class="profile-header">
         <span class="text-lead">{{user.username}}'s recent activity</span>
@@ -32,25 +32,35 @@ export default {
   },
   mixins: [asyncData],
   computed: {
-    ...mapGetters({
+    ...mapGetters("auth", {
       user: "authUser"
     }),
     userPosts() {
       if (this.user.posts) {
-        return this.$store.getters.postsWithId.filter(
+        return this.$store.getters["posts/postsWithId"].filter(
           post => post.userId === this.user.id
         );
       }
     }
   },
+  methods: {
+    childReady() {
+      this.asyncDataStatus_fetched();
+    }
+  },
   beforeCreate() {
-    this.$store.dispatch("fetchAuthUser").then(user => {
+    this.$store.dispatch("auth/fetchAuthUser").then(user => {
       this.$store
-        .dispatch("fetchPosts", { ids: Object.keys(user.posts) })
+        .dispatch("posts/fetchPosts", { ids: Object.keys(user.posts) })
         .then(() => {
           this.asyncDataStatus_fetched();
         });
     });
+  },
+  updated() {
+    if (this.$route.query.back) {
+      this.asyncDataStatus_fetched();
+    }
   }
 };
 </script>

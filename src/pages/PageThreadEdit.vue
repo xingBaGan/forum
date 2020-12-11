@@ -37,7 +37,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["fetchThread", "fetchPost"]),
+    ...mapActions("posts", ["fetchPost"]),
+    ...mapActions("threads", ["fetchThread"]),
     save({ title, text }) {
       this.$store
         .dispatch("updateThread", {

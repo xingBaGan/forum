@@ -90,7 +90,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   console.log(`🚦 navigating to ${to.name} from ${from.name}`)
-  store.dispatch('initAuthentication').then(user => {
+  store.dispatch('auth/initAuthentication').then(user => {
     if (to.matched.some(route => route.meta.requiredAuth)) {
       //to.matched.some(route=>route.meta.requiredAuth) 对匹配 这个的进行检查，而不是对他的子路由设置 meta
       //auth the user

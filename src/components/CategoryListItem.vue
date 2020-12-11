@@ -22,7 +22,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
+    ...mapGetters("forums", {
       forumsWithKey: "forumsWithId"
     }),
     forums() {

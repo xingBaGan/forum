@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     forum() {
-      return this.$store.getters.forumsWithId.find(
+      return this.$store.getters["forums/forumsWithId"].find(
         item => item.id === this.forumId
       );
     },
@@ -42,7 +42,7 @@ export default {
   methods: {
     save({ title, text }) {
       this.$store
-        .dispatch("createThread", {
+        .dispatch("threads/createThread", {
           forumId: this.forum.id,
           title,
           text
@@ -55,7 +55,7 @@ export default {
     cancel() {
       this.$router.go(-1);
     },
-    ...mapActions(["fetchForum"])
+    ...mapActions("forums", ["fetchForum"])
   },
   created() {
     this.fetchForum({ id: this.forumId }).then(this.$emit("ready"));

@@ -41,7 +41,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["createPost", "updatePost"]),
+    ...mapActions("posts", ["createPost", "updatePost"]),
     save() {
       (this.isUpdate ? this.update() : this.create()).then(postId => {
         this.$emit("save", { postId });

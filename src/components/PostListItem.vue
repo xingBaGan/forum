@@ -49,13 +49,13 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.state.users[this.post.userId];
+      return this.$store.state.users.items[this.post.userId];
     },
     userPostCount() {
-      return this.$store.getters.userPostsCount(this.post.userId);
+      return this.$store.getters["users/userPostsCount"](this.post.userId);
     },
     userThreadCount() {
-      return this.$store.getters.userThreadsCount(this.post.userId);
+      return this.$store.getters["users/userThreadsCount"](this.post.userId);
     }
   }
 };
