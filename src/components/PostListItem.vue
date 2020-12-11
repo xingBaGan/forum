@@ -10,13 +10,13 @@
       <template v-if="!editing">
         <div>{{post.text}}</div>
         <a
-          @click.prevent="editing =true"
+          @click.prevent="editing =true && canEdit"
           href="#"
           style="margin-left:auto;"
           class="link-unstyled"
           title="make a change"
         >
-          <i class="fa fa-pencil"></i>
+          <i class="fa fa-pencil" v-if="canEdit"></i>
         </a>
       </template>
       <div v-else style=" width: 100%;">
@@ -48,8 +48,14 @@ export default {
     };
   },
   computed: {
+    canEdit() {
+      return this.user && this.user.id === this.$store.state.auth.authId;
+    },
     user() {
-      return this.$store.state.users.items[this.post.userId];
+      // [this.post.userId];
+      return this.$store.getters["users/usersWithId"].find(user => {
+        return user.id === this.post.userId;
+      });
     },
     userPostCount() {
       return this.$store.getters["users/userPostsCount"](this.post.userId);

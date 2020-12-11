@@ -1,7 +1,29 @@
 # vueschool-forum
 
 > awesome forum
+* 使用vue-cli 搭建，[模板](https://github.com/vuejs-templates/webpack)
+* 用到 firebase 作为后台【所以需要梯子】
+* 使用 netlify  部署 ，[在线例子](https://epic-brown-5d42be.netlify.app/)
 
+#### features
+- [x] 游客可以查看讨论，可以根据分类找到不同的论坛，查看讨论
+- [ ] 查看其他用户的基本信息
+- [x] 用户查看自己的profile,与最近发表的言论并进行修改
+- []  修改之后可以看到修改的时间
+- [x] 用户登录，注册
+- [x] 注册等表单校验 【用到 vuelidate】
+    * [x] 对于已经注册的用户名即邮箱进行限制
+    * [x] 对于发表言论长度，密码等进行限制
+- [x] 用户发送讨论，可以查看发表的时间
+- [x] 可以修改评论
+- [] 在其他用户发言下发表言论
+- [x] 用户可以发起讨论
+- [x] 响应式
+
+#### 使用到的依赖
+* momentjs
+* vuelidate
+* nprogress
 ## Build Setup
 
 ``` bash
