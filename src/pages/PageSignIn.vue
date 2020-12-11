@@ -5,11 +5,37 @@
         <h1 class="text-center">Login</h1>
         <div class="form-group">
           <label for="email">Email</label>
-          <input v-model="form.email" id="email" type="text" class="form-input">
+          <input
+            v-model="form.email"
+            id="email"
+            type="text"
+            class="form-input"
+            @blur="$v.form.email.$touch()"
+          >
+          <template v-if="$v.form.email.$error">
+            <span v-if="!$v.form.email.required" class="form-error">This field is required</span>
+            <span
+              v-if="!$v.form.email.email"
+              class="form-error"
+            >please input the correct email format</span>
+          </template>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input v-model="form.password" id="password" type="password" class="form-input">
+          <input
+            v-model="form.password"
+            id="password"
+            type="password"
+            class="form-input"
+            @blur="$v.form.password.$touch()"
+          >
+          <template v-if="$v.form.password.$error">
+            <span v-if="!$v.form.password.required" class="form-error">This field is required</span>
+            <span
+              v-if="!$v.form.password.minLength"
+              class="form-error"
+            >The password must be at least 6 characters long</span>
+          </template>
         </div>
         <div class="push-top">
           <button type="submit" class="btn-blue btn-block">Log in</button>
@@ -28,7 +54,7 @@
 </template>
 
 <script>
-// import { required, email, minLength } from "vuelidate/lib/validators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -38,18 +64,30 @@ export default {
       }
     };
   },
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(6)
+      }
+    }
+  },
   methods: {
     signIn() {
-      // this.$v.form.$touch();
-      // if (!this.$v.form.$invalid) {
-      this.$store
-        .dispatch("auth/signInWithEmailAndPassword", {
-          email: this.form.email,
-          password: this.form.password
-        })
-        .then(() => this.successRedirect())
-        .catch(error => alert("🤷‍️" + error.message));
-      // }
+      this.$v.form.$touch();
+      if (!this.$v.form.$invalid) {
+        this.$store
+          .dispatch("auth/signInWithEmailAndPassword", {
+            email: this.form.email,
+            password: this.form.password
+          })
+          .then(() => this.successRedirect())
+          .catch(error => alert("🤷‍️" + error.message));
+      }
     },
     signInWithGoogle() {
       this.$store

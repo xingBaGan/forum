@@ -10,15 +10,15 @@
           type="text"
           placeholder="Username"
           class="form-input text-lead text-bold"
+          @blur="$v.activeUser.username.$touch()"
         >
-        <!-- @blur="$v.activeUser.username.$touch()" -->
-        <!-- <template v-if="$v.activeUser.username.$error">
+        <template v-if="$v.activeUser.username.$error">
           <span v-if="!$v.activeUser.username.required" class="form-error">This field is required</span>
           <span
             v-if="!$v.activeUser.username.unique"
             class="form-error"
           >Sorry! This username is taken</span>
-        </template>-->
+        </template>
       </div>
       <div class="form-group">
         <input
@@ -26,11 +26,11 @@
           type="text"
           placeholder="Full Name"
           class="form-input text-lead"
+          @blur="$v.activeUser.name.$touch()"
         >
-        <!-- @blur="$v.activeUser.name.$touch()" -->
-        <!-- <template v-if="$v.activeUser.name.$error">
+        <template v-if="$v.activeUser.name.$error">
           <span v-if="!$v.activeUser.name.required" class="form-error">The name field is required</span>
-        </template>-->
+        </template>
       </div>
       <div class="form-group">
         <label for="user_bio">Bio</label>
@@ -57,9 +57,9 @@
           autocomplete="off"
           class="form-input"
           id="user_email"
+          @blur="$v.activeUser.email.$touch()"
         >
-        <!-- @blur="$v.activeUser.email.$touch()" -->
-        <!-- <template v-if="$v.activeUser.email.$error">
+        <template v-if="$v.activeUser.email.$error">
           <span v-if="!$v.activeUser.email.required" class="form-error">This field is required</span>
           <span
             v-else-if="!$v.activeUser.email.email"
@@ -69,7 +69,7 @@
             v-else-if="!$v.activeUser.email.unique"
             class="form-error"
           >Sorry! This email is taken</span>
-        </template>-->
+        </template>
       </div>
       <div class="form-group">
         <label class="form-label" for="user_location">Location</label>
@@ -90,8 +90,8 @@
 </template>
 
 <script>
-// import { required, email } from 'vuelidate/lib/validators'
-// import { uniqueUsername, uniqueEmail } from '@/utils/validators'
+import { required, email } from "vuelidate/lib/validators";
+import { uniqueUserName, uniqueEmail } from "@/utils/validators";
 import { countObjectProperties } from "@/utils";
 export default {
   props: {
@@ -104,6 +104,32 @@ export default {
     return {
       activeUser: { ...this.user }
     };
+  },
+  validations: {
+    activeUser: {
+      name: {
+        required
+      },
+      username: {
+        required,
+        unique(value) {
+          if (value.toLowerCase() === this.user.usernameLower) {
+            return true;
+          }
+          return uniqueUserName(value);
+        }
+      },
+      email: {
+        required,
+        email,
+        unique(value) {
+          if (value.toLowerCase() === this.user.email) {
+            return true;
+          }
+          return uniqueEmail(value);
+        }
+      }
+    }
   },
   computed: {
     userThreadsCount() {

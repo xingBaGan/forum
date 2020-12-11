@@ -2,11 +2,39 @@
   <form @submit.prevent="save">
     <div class="form-group">
       <label for="thread_title">Title:</label>
-      <input type="text" v-model="activeTitle" id="thread_title" class="form-input" name="title">
+      <input
+        type="text"
+        v-model="activeTitle"
+        id="thread_title"
+        class="form-input"
+        name="title"
+        @blur="$v.form.title.$touch()"
+      >
+      <template v-if="$v.form.title.$error">
+        <span v-if="!$v.form.title.required" class="form-error">Thread must have a title</span>
+        <span
+          v-if="!$v.form.title.minLength"
+          class="form-error"
+        >The title must be least 10 characters long</span>
+      </template>
     </div>
     <div class="form-group">
       <label for="thread_content">Content:</label>
-      <textarea v-model="activeText" id="thread_title" class="form-input" cols="30" rows="10"></textarea>
+      <textarea
+        v-model="activeText"
+        id="thread_title"
+        class="form-input"
+        cols="30"
+        rows="10"
+        @blur="$v.form.text.$touch()"
+      ></textarea>
+      <template v-if="$v.form.text.$error">
+        <span v-if="!$v.form.text.required" class="form-error">Thread must have some content</span>
+        <span
+          v-if="!$v.form.text.minLength"
+          class="form-error"
+        >The text of the thread must be least 40 characters long. Type at least {{40 - form.text.length}} more</span>
+      </template>
     </div>
     <div class="btn-group">
       <button class="btn-ghost btn" @click.prevent="cancel">Cancel</button>
@@ -16,6 +44,7 @@
 </template>
 
 <script>
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   props: {
     forum: {
@@ -30,6 +59,19 @@ export default {
       default: ""
     }
   },
+  validations: {
+    form: {
+      title: {
+        required,
+        minLength: minLength(10)
+      },
+      text: {
+        required,
+        minLength: minLength(40)
+      }
+    }
+  },
+
   data() {
     return {
       activeTitle: this.title,

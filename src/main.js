@@ -7,10 +7,10 @@ import AppDate from '@comp/AppDate'
 import store from './store'
 import firebase from 'firebase/app'
 import 'firebase/firebase-database'
+import Vuelidate from 'vuelidate'
 Vue.config.productionTip = false
 Vue.component('AppDate', AppDate)
 /* eslint-disable no-new */
-import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
 var firebaseConfig = {
