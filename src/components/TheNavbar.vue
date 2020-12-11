@@ -1,17 +1,21 @@
 <template>
-  <header class="header" id="header" @click="userDropdownOpen=false">
+  <header class="header" id="header" v-handle-scroll="closeMobileNav">
     <router-link :to="{name:'Home'}" class="logo">
       <img src="../assets/img/vueschool-logo.svg" alt="">
     </router-link>
-    <div class="btn-hamburger">
+    <div
+      class="btn-hamburger"
+      @click="mobileNavOpen=!mobileNavOpen"
+      v-click-outside="closeMobileNav"
+    >
       <div class="top bar"></div>
       <div class="middle bar"></div>
       <div class="bottom bar"></div>
     </div>
-    <nav class="navbar">
+    <nav class="navbar" :class="{'navbar-open':mobileNavOpen}">
       <ul v-if="user">
-        <li class="navbar-user">
-          <a @click.prevent.stop="userDropdownOpen=!userDropdownOpen">
+        <li class="navbar-user" v-click-outside="closeUserDropdown">
+          <a @click.prevent.stop="userDropdownOpen = !userDropdownOpen">
             <img :src="user.avatar" alt="" class="avatar-small">
             <span>
               {{user.name}}
@@ -34,6 +38,14 @@
             </li>
           </ul>
         </div>
+        <li class="navbar-mobile-item">
+          <router-link :to="{name: 'Profile'}">View Profile</router-link>
+        </li>
+        <li class="navbar-mobile-item">
+          <a
+            @click.prevent="$store.dispatch('auth/signOut').then(()=>{$router.push({name:'Home'})})"
+          >Sign Out</a>
+        </li>
       </ul>
       <ul v-else>
         <li class="navbar-item">
@@ -48,17 +60,32 @@
 </template>
 
 <script>
+import clickOutside from "@/directives/click-outside";
+import handleScroll from "@/directives/handle-scroll";
 import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      userDropdownOpen: true
+      userDropdownOpen: true,
+      mobileNavOpen: false
     };
+  },
+  directives: {
+    clickOutside,
+    handleScroll
   },
   computed: {
     ...mapGetters("auth", {
       user: "authUser"
     })
+  },
+  methods: {
+    closeUserDropdown() {
+      this.userDropdownOpen = false;
+    },
+    closeMobileNav() {
+      this.mobileNavOpen = false;
+    }
   },
   created() {
     if (!this.$store.state.authId) return;

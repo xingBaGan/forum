@@ -47,8 +47,6 @@ export default {
         const usernameLower = username.toLowerCase()
         email = email.toLowerCase()
         const user = { avatar, email, name, username, password, usernameLower, registeredAt }
-        // const userId = firebase.database().ref('users').push().key
-        // console.log(id)
         firebase.database().ref('users').child(id).set(user)
           .then(() => {
             commit('setItem', { resource: 'users', id: id, item: user }, { root: true })

@@ -20,7 +20,7 @@ export default {
     },
     fetchAuthUser({ dispatch, commit }) {
       const userId = firebase.auth().currentUser.uid
-      console.log("userId" + userId)
+      console.log("🌵 userId" + userId)
       if (!userId) return null;
       return new Promise((resolve, reject) => {
         // check if user exists in the database
