@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import { OBTreeToArrayWithId } from '@/utils'
 export default {
   state: {
-    items: []
+    items: {}
   },
   getters: {
     postsWithId(state) {
@@ -23,7 +23,10 @@ export default {
       const updates = {}
       updates[`posts/${postId}`] = post
       updates[`threads/${post.threadId}/posts/${postId}`] = postId
+      updates[`threads/${post.threadId}/lastPostId`] = postId
+      updates[`threads/${post.threadId}/lastPostAt`] = Math.floor(Date.now() / 1000)
       updates[`threads/${post.threadId}/contributors/${post.userId}`] = post.userId
+      updates[`forums/${rootState.threads.items[post.threadId].forumId}/lastPostId`] = postId
       updates[`users/${post.userId}/posts/${postId}`] = postId
       firebase.database().ref().update(updates).then(() => {
         //set post

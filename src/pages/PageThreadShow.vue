@@ -3,6 +3,7 @@
     <h1>
       {{thread.title}}
       <router-link
+        v-if="user.id === $store.state.auth.authId"
         :to="{name:'ThreadEdit',params:{id:this.id}}"
         class="btn-green btn-small"
         tag="button"
@@ -56,7 +57,12 @@ export default {
       });
     },
     user() {
-      return this.thread && this.$store.state.users.items[this.thread.userId];
+      return (
+        this.thread &&
+        this.$store.getters["users/usersWithId"].find(item => {
+          return item.id === this.thread.userId;
+        })
+      );
     },
     repliesCount() {
       return (

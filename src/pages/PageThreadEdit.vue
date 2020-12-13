@@ -25,12 +25,12 @@ export default {
   mixins: [asyncDataStatus],
   computed: {
     thread() {
-      return this.$store.getters.threadsWithId.find(
+      return this.$store.getters["threads/threadsWithId"].find(
         item => item.id === this.id
       );
     },
     firstPost() {
-      return this.$store.state.posts[this.thread.firstPostId];
+      return this.$store.state.posts.items[this.thread.firstPostId];
     },
     text() {
       return this.firstPost ? this.firstPost.text : "";

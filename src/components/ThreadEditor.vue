@@ -8,12 +8,12 @@
         id="thread_title"
         class="form-input"
         name="title"
-        @blur="$v.form.title.$touch()"
+        @blur="$v.activeTitle.$touch()"
       >
-      <template v-if="$v.form.title.$error">
-        <span v-if="!$v.form.title.required" class="form-error">Thread must have a title</span>
+      <template v-if="$v.activeTitle.$error">
+        <span v-if="!$v.activeTitle.required" class="form-error">Thread must have a title</span>
         <span
-          v-if="!$v.form.title.minLength"
+          v-if="!$v.activeTitle.minLength"
           class="form-error"
         >The title must be least 10 characters long</span>
       </template>
@@ -26,14 +26,14 @@
         class="form-input"
         cols="30"
         rows="10"
-        @blur="$v.form.text.$touch()"
+        @blur="$v.activeText.$touch()"
       ></textarea>
-      <template v-if="$v.form.text.$error">
-        <span v-if="!$v.form.text.required" class="form-error">Thread must have some content</span>
+      <template v-if="$v.activeText.$error">
+        <span v-if="!$v.activeText.required" class="form-error">Thread must have some content</span>
         <span
-          v-if="!$v.form.text.minLength"
+          v-if="!$v.activeText.minLength"
           class="form-error"
-        >The text of the thread must be least 40 characters long. Type at least {{40 - form.text.length}} more</span>
+        >The text of the thread must be least 40 characters long. Type at least {{40 - activeText.length}} more</span>
       </template>
     </div>
     <div class="btn-group">
@@ -60,15 +60,13 @@ export default {
     }
   },
   validations: {
-    form: {
-      title: {
-        required,
-        minLength: minLength(10)
-      },
-      text: {
-        required,
-        minLength: minLength(40)
-      }
+    activeTitle: {
+      required,
+      minLength: minLength(10)
+    },
+    activeText: {
+      required,
+      minLength: minLength(40)
     }
   },
 

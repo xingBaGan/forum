@@ -43,7 +43,6 @@ export default {
         updates[`threads/${threadId}`] = thread //1. 不能同时设置父子路径
         updates[`forums/${forumId}/threads/${threadId}`] = threadId
         updates[`users/${userId}/threads/${threadId}`] = threadId
-
         updates[`posts/${postId}`] = post
         // updates[`threads/${threadId}/posts/${postId}`] = postId
         updates[`users/${userId}/posts/${postId}`] = postId
