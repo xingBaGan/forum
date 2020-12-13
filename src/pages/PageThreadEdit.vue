@@ -41,7 +41,7 @@ export default {
     ...mapActions("threads", ["fetchThread"]),
     save({ title, text }) {
       this.$store
-        .dispatch("updateThread", {
+        .dispatch("threads/updateThread", {
           threadId: this.id,
           title,
           text

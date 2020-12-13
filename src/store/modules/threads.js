@@ -62,13 +62,13 @@ export default {
         })
       })
     },
-    updateThread({ state, commit }, { text, title, threadId }) {
+    updateThread({ state, commit, rootState }, { text, title, threadId }) {
       return new Promise((resolve, reject) => {
         const thread = state.items[threadId];
-        const post = state.posts[thread.firstPostId];
+        const post = state.items[thread.firstPostId];
         const edited = {
           at: Math.floor(Date.now() / 1000),
-          by: state.authId
+          by: rootState.auth.authId
         }
         const updates = {}
         updates[`posts/${thread.firstPostId}/text`] = text
@@ -85,6 +85,8 @@ export default {
             }
           }, { root: true })
           resolve(threadId)
+        }).catch((e) => {
+          reject(e)
         })
       });
     },
