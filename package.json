@@ -8,9 +8,9 @@
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
     "dev": "node build/dev-server.js",
-    "start": "npm run dev",
     "dev-server": "json-server ./src/json-server/data.json --watch --port 3031",
-    "server-test": "json-server ./src/json-server/db.json --watch --port 3002"
+    "server-test": "json-server ./src/json-server/db.json --watch --port 3002",
+    "start": "npm run dev"
   },
   "dependencies": {
     "firebase": "^8.1.2",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@vue/cli-plugin-vuex": "~4.5.0",
     "autoprefixer": "^7.1.2",
+    "axios": "^0.18.0",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.1",
@@ -59,6 +60,7 @@
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
     "url-loader": "^0.5.8",
+    "vue-cli-plugin-axios": "~0.0.4",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",

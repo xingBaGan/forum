@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import $api from "../api";
 import asyncDataStatus from "@/mixins/asyncDataStatus";
 export default {
   mixins: [asyncDataStatus],
@@ -11,9 +12,12 @@ export default {
       return this.$route.params.id;
     }
   },
-  beforeMount() {
-    // this.
-    this.asyncDataStatus_fetched();
+  mounted() {
+    console.log($api);
+    $api.games.getGames().then(res => {
+      this.asyncDataStatus_fetched();
+      console.log(res.data);
+    });
   }
 };
 </script>
