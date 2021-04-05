@@ -1,6 +1,6 @@
 <template>
   <div class="col-full" v-if="asyncDataStatus_ready">
-    <h1 class="push-top">welcome to the forum</h1>
+    <h1 class="push-top">welcome to the game forum</h1>
     <!-- <forum-list :forums="keyWithForums"></forum-list> -->
     <category-list :categories="categories"></category-list>
   </div>
@@ -18,6 +18,7 @@ export default {
       return this.$store.state.categories;
     }
   },
+
   components: {
     CategoryList
   },

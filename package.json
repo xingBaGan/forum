@@ -8,7 +8,9 @@
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
     "dev": "node build/dev-server.js",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "dev-server": "json-server ./src/json-server/data.json --watch --port 3031",
+    "server-test": "json-server ./src/json-server/db.json --watch --port 3002"
   },
   "dependencies": {
     "firebase": "^8.1.2",

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import Home from '@/pages/PageHome'
+import Game from '@/pages/PageGame'
 import ThreadShow from '@/pages/PageThreadShow'
 import PageNotFound from '@/pages/PageNotFound'
 import PageForum from '@/pages/PageForum'
@@ -78,6 +79,13 @@ const router = new Router({
       name: 'Login',
       component: Login,
       meta: { requiredGuest: true }
+    },
+
+    //TODO:游戏页面
+    {
+      path: '/game/:id',
+      name: 'Game',
+      component: Game
     },
     {
       path: '*',
