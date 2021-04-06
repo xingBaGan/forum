@@ -19,6 +19,14 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://localhost:3031',
+        pathRewrite: { '^/api': '/' },
+      },
+    },
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

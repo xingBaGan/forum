@@ -4,6 +4,7 @@
       <div class="forum-header">
         <div class="forum-details">
           <h1>{{forum.name}}</h1>
+          <router-link :to="{name:'Game',params:{forumId:forum.id}}">{{forum.name}}</router-link>
           <p class="text-lead">{{forum.description}}</p>
         </div>
         <router-link

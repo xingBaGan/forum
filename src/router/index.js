@@ -83,7 +83,7 @@ const router = new Router({
 
     //TODO:游戏页面
     {
-      path: '/game/:id',
+      path: '/game/:forumId',
       name: 'Game',
       component: Game
     },

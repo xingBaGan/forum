@@ -8,8 +8,8 @@
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
     "dev": "node build/dev-server.js",
-    "dev-server": "json-server ./src/json-server/data.json --watch --port 3031",
-    "server-test": "json-server ./src/json-server/db.json --watch --port 3002",
+    "dev-server": "json-server  ./json-server/data.json --watch --port 3031",
+    "server-test": "json-server ./json-server/db.json --watch --port 3002",
     "start": "npm run dev"
   },
   "dependencies": {

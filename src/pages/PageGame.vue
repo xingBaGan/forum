@@ -1,5 +1,5 @@
 <template>
-  <div>this is game{{id}}</div>
+  <div>this is game{{forumId}}</div>
 </template>
 
 <script>
@@ -8,13 +8,12 @@ import asyncDataStatus from "@/mixins/asyncDataStatus";
 export default {
   mixins: [asyncDataStatus],
   computed: {
-    id() {
-      return this.$route.params.id;
+    forumId() {
+      return this.$route.params.forumId;
     }
   },
   mounted() {
-    console.log($api);
-    $api.games.getGames().then(res => {
+    $api.games.getGameByForumId(this.forumId).then(res => {
       this.asyncDataStatus_fetched();
       console.log(res.data);
     });
