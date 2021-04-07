@@ -49,5 +49,14 @@ pagckage.json 参数 https://nodejs.org/api/cli.html#cli_unhandled_rejections_mo
 >UnhandledPromiseRejectionWarning: Error: spawn cmd ENOENT
 
 并且会有提示：【也就是所之后的的这种waring 也被废弃，无关紧要的问题】
-[DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are 
+[DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are
 not handled will terminate the Node.js process with a non-zero exit code.
+
+
+### 添加tailwindcss 依赖
+https://github.com/tailwindlabs/tailwindcss/issues/231
+中 cesaramirez commented on 23 Nov 2017
+官方没有介绍得方法：  https://github.com/cesaramirez/popular-layouts
+并且我的
+> // require('autoprefixer')
+插件使用会报错注意！！
