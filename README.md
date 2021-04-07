@@ -41,3 +41,22 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+> 注意：可能会遇到循环依赖的警告。这是因为node 14.0 以上的错误，使用nvm 把版本切换为12.* 就可以了，我这里使用12.18.4
+
+pagckage.json 参数 https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode
+如果不添加的话：产生如下错误 ，大意是有异步erro 没有被异常处理
+>UnhandledPromiseRejectionWarning: Error: spawn cmd ENOENT
+
+并且会有提示：【也就是所之后的的这种waring 也被废弃，无关紧要的问题】
+[DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are
+not handled will terminate the Node.js process with a non-zero exit code.
+
+
+### 添加tailwindcss 依赖
+https://github.com/tailwindlabs/tailwindcss/issues/231
+中 cesaramirez commented on 23 Nov 2017
+官方没有介绍得方法：  https://github.com/cesaramirez/popular-layouts
+并且我的
+> // require('autoprefixer')
+插件使用会报错注意！！

@@ -49,7 +49,10 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderConfig
+        options: {
+          // postcss: [require('tailwindcss'), require('autoprefixer')],
+          ...vueLoaderConfig
+        }
       },
       {
         test: /\.js$/,
