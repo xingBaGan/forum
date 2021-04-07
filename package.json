@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "dev": "node build/dev-server.js",
+    "dev": "node --unhandled-rejections=none build/dev-server.js  ",
     "start": "npm run dev"
   },
   "dependencies": {
@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-vuex": "~4.5.0",
-    "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.1",
