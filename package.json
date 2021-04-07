@@ -11,9 +11,12 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.5",
     "firebase": "^8.1.2",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
+    "postcss": "^8.2.9",
+    "tailwindcss": "^2.1.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.7.6",

@@ -46,6 +46,7 @@ export default {
 
 <style>
 @import "./assets/css/style.css";
+@import "./assets/css/tailwind.css";
 @import "~nprogress/nprogress.css";
 #nprogress .bar {
   background: #8080ff;
