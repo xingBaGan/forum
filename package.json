@@ -7,13 +7,9 @@
   "scripts": {
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-<<<<<<< HEAD
-    "dev": "node build/dev-server.js",
     "dev-server": "json-server  ./json-server/data.json --watch --port 3031",
     "server-test": "json-server ./json-server/db.json --watch --port 3002",
-=======
     "dev": "node --unhandled-rejections=none build/dev-server.js  ",
->>>>>>> c56bb2af1a55d14202762c834707731c168dc8aa
     "start": "npm run dev"
   },
   "dependencies": {
@@ -30,11 +26,8 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-vuex": "~4.5.0",
-<<<<<<< HEAD
     "autoprefixer": "^7.1.2",
     "axios": "^0.18.0",
-=======
->>>>>>> c56bb2af1a55d14202762c834707731c168dc8aa
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.1",

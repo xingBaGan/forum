@@ -2,20 +2,20 @@
   "games": [
     {
       "id": 1,
-      "bg_images": " //pic1.cdncl.net/game/user_upload/yoge/c577499b1c23cee2657d84848666944b.jpg?imageView2/1/w/600/h/300 ",
-      "name ": "League Of Legends",
-      "publish_time ": "2021年3月26日 ",
-      "number ": "暂无评分 ",
+      "bg_images": "https://th.bing.com/th/id/OIP.ABKyl3AUItWaLB6aG7PImgHaEo?w=287&h=180&c=7&o=5&pid=1.7",
+      "name": "League Of Legends",
+      "publish_time": "2021年3月26日 ",
+      "number": "暂无评分 ",
       "tags": [],
       "description": "League of Legends is a competitive, fast paced action-strategy game! For those who crave a hard fought victory, join today!",
       "forumId": "-KpOx5Y4AqRr3sB4Ybwj"
     },
     {
       "id": 2,
-      "bg_images": " //pic1.cdncl.net/placeholder/placeholder640_v2.png ",
-      "name ": "Teamfight Tactics ",
-      "publish_time ": "2021年3月13日 ",
-      "number ": "暂无评分 ",
+      "bg_images": "https://th.bing.com/th/id/OIP.ABKyl3AUItWaLB6aG7PImgHaEo?w=287&h=180&c=7&o=5&pid=1.7",
+      "name": "Teamfight Tactics ",
+      "publish_time": "2021年3月13日 ",
+      "number": "暂无评分 ",
       "tags": [],
       "description": "TFT is a round-based strategy game that pits you against seven opponents in a free-for-all race to build a powerful team that fights on your behalf.",
       "forumId": "-KsjO4_W3W9Q2Z2UmuPr"

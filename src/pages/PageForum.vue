@@ -3,8 +3,8 @@
     <div class="col-full push-top">
       <div class="forum-header">
         <div class="forum-details">
-          <h1>{{forum.name}}</h1>
-          <router-link :to="{name:'Game',params:{forumId:forum.id}}">{{forum.name}}</router-link>
+          
+          <router-link class="t-link" :to="{name:'Game',params:{forumId:forum.id}}">{{forum.name}}</router-link>
           <p class="text-lead">{{forum.description}}</p>
         </div>
         <router-link
@@ -69,6 +69,9 @@ export default {
 </script>
 
 <style  scoped>
+.t-link{
+  @apply text-5xl;
+}
 .forum-full {
   width: 100%;
 }
