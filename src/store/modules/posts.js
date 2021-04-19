@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import firebase from 'firebase'
 import { OBTreeToArrayWithId } from '@/utils'
+
 export default {
   state: {
     items: {}
@@ -59,6 +60,34 @@ export default {
           })
           resolve(id)
         })
+      });
+    },
+    likePost({ state, commit, rootState }, { postId, like }) {
+      return new Promise((resolve, reject) => {
+        const updates = {}
+        let post = state.items[postId]
+        let likeUserId = rootState.auth.authId;
+        if (!like) {
+          firebase.database().ref(`posts/${postId}/likes/${likeUserId}`).remove().then(() => {
+            if (post.likes) {
+              let likes = post.likes
+              delete likes[`${likeUserId}`];
+            }
+            commit('setItem', { resource: 'posts', item: post, id: postId }, { root: true })
+            resolve({ postId, like })
+          })
+        }
+        else {
+          updates[`posts/${postId}/likes/${likeUserId}`] = likeUserId
+          firebase.database().ref().update(updates, snapshot => {
+            //等价与上面做的
+            if (!post.likes) post['likes'] = {};
+            post.likes[`${likeUserId}`] = likeUserId;
+            commit('setItem', { resource: 'posts', item: post, id: postId }, { root: true })
+            resolve({ postId, like })
+          })
+        }
+
       });
     },
     fetchPost: ({ dispatch }, { id }) => dispatch('fetchItem', { resource: 'posts', id, emoji: '📮' }, { root: true }),

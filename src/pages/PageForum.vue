@@ -3,9 +3,8 @@
     <div class="col-full push-top">
       <div class="forum-header">
         <div class="forum-details">
-          
           <router-link class="t-link" :to="{name:'Game',params:{forumId:forum.id}}">{{forum.name}}</router-link>
-          <p class="text-lead">{{forum.description}}</p>
+          <p class="text-lead text-over">{{forum.description}}</p>
         </div>
         <router-link
           :to="{name:'ThreadCreate',params:{forumId:this.forum.id}}"
@@ -69,10 +68,15 @@ export default {
 </script>
 
 <style  scoped>
-.t-link{
+.t-link {
   @apply text-5xl;
 }
 .forum-full {
   width: 100%;
+}
+.text-over {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 250px;
 }
 </style>
