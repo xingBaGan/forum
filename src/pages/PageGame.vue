@@ -4,6 +4,7 @@
       <img :src="game.bg_images" alt="" class="game-avater">
       <div class="content">
         <h2 class="title">{{game.name}}</h2>
+        <h3 class="desc">{{game.description}}</h3>
         <div class="img-aside">
           <div class="btns">
             <span class="btn">关注</span>
@@ -50,9 +51,17 @@ export default {
 </script>
 
 <style scoped>
+.desc{
+  height:100px;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  @apply text-base;
+}
 .main {
   background-color: #263959;
-  @apply container mx-auto h-full bg-blue-300 px-4  bg-opacity-90 flex justify-between mt-8;
+   max-width: 75vw;
+  @apply  rounded mx-auto h-full bg-blue-300 px-4  bg-opacity-90 flex justify-between mt-8 max-w-full lg:max-w-4xl;
+
 }
 .game-avater {
   height: 160px;
@@ -82,7 +91,8 @@ export default {
   @apply flex justify-between;
 }
 .value {
-  @apply text-base text-black py-4;
+  width: 300px;
+  @apply text-base text-black py-4 ;
 }
 .number {
   @apply text-4xl text-black mt-2;

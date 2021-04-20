@@ -24,8 +24,9 @@
       </div>
     </div>
     <div class="post-date text-faded">
-      <span class="iconfont icon-custom-love pos" :class="{'icon-love':isLiked}" @click="like"></span>
-      {{likeLen}}
+      <span class="iconfont icon-custom-love " :class="{'icon-love':isLiked}" @click="like"></span>
+     <span class="like"> {{likeLen}}</span>
+
       <div class="rel iconfont icon-arrowdown pos">
         <ul class="oth-bths">
           <li @click="report">
@@ -43,6 +44,8 @@
 </template>
 
 <script>
+
+
 import PostEditor from "./PostEditor";
 import { mapActions } from "vuex";
 export default {
@@ -50,7 +53,8 @@ export default {
     PostEditor
   },
   props: {
-    post: {
+    post: {//传入的post.likes 不会响应式的
+    //必须在下面获取store itmes 中的值
       required: true,
       type: Object
     }
@@ -64,29 +68,27 @@ export default {
     };
   },
   beforeMount() {
-    // if (this.$store.state.posts.items[this.post.id].likes)
-    this.likeLen = Object.keys(this.post_likes).length;
-    if (!this.$store.state.posts.items[this.post.id]) {
+    //TODO:喜爱功能
+    if (this.$store.state.posts.items[this.post.id].likes)
+      this.likeLen = Object.keys(this.$store.state.posts.items[this.post.id].likes).length ;
+    if (!this.$store.state.posts.items[this.post.id].likes) {
       this.isLiked = false;
       return;
     }
-    this.isLiked = this.$store.state.posts.items[this.post.id][
+    this.isLiked = this.$store.state.posts.items[this.post.id].likes[
       this.$store.state.auth.authId
     ]
       ? true
       : false;
   },
   computed: {
-    post_likes() {
-      return this.$store.state.posts.items[this.post.id]
-        ? this.$store.state.posts.items[this.post.id].likes
-        : {};
-    },
+    // post_likes() {
+    //   return this.$store.state.posts.items[this.post.id].likes;
+    // },
     canEdit() {
       return this.user && this.user.id === this.$store.state.auth.authId;
     },
     user() {
-      // [this.post.userId];
       return this.$store.getters["users/usersWithId"].find(user => {
         return user.id === this.post.userId;
       });
@@ -110,7 +112,9 @@ export default {
         console.log(
           res.like ? "add post 💌" + res.postId : "remove post 💌" + res.postId
         );
-        this.likeLen = Object.keys(this.post_likes).length;
+        this.likeLen = this.$store.state.posts.items[this.post.id]
+          ? Object.keys(this.$store.state.posts.items[this.post.id].likes).length
+          : 0;
       });
     },
     collect() {
@@ -140,10 +144,10 @@ export default {
   position: absolute;
   @apply shadow-2xl bg-blue-700 opacity-60 p-2;
 }
-
-.like-btn {
-  @apply m-4 p-2;
+.like{
+  @apply pr-4;
 }
+
 .icon-arrowdown:hover {
   color: red;
 }
