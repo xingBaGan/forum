@@ -9,11 +9,15 @@ import store from './store'
 import firebase from 'firebase/app'
 import 'firebase/firebase-database'
 import Vuelidate from 'vuelidate'
+import rate from 'vue-rate'
+import 'vue-rate/dist/vue-rate.css'
 Vue.config.productionTip = false
 Vue.component('AppDate', AppDate)
 /* eslint-disable no-new */
 Vue.use(Vuelidate)
 
+
+Vue.use(rate)
 var firebaseConfig = {
   apiKey: "AIzaSyBmjJWvDgEuRWryS2f9NZzDRiXkZpQASbc",
   authDomain: "vue-school-forum-69951.firebaseapp.com",

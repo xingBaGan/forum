@@ -1,4 +1,6 @@
 import game from './game'
+import evaluations from './evaluation'
 export default {
-  "games": game
+  "games": game,
+  "evaluations":evaluations
 }

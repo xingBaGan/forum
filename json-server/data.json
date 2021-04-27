@@ -20,5 +20,25 @@
       "description": "《云顶之弈》是游戏《英雄联盟》中的一个回合制策略游戏模式，于2019年6月27日（9.13版本）在中国服务器正式上线。在云顶之弈模式中，每局比赛由八名玩家共同进行一对一决斗，直到场上只剩下最后一名玩家。获胜关键是在合理的战术策略下从随机化的英雄池中选择最佳的英雄阵容，用装备对阵容进行强",
       "forumId": "-KsjO4_W3W9Q2Z2UmuPr"
     }
+  ],
+  "evaluations": [
+    {
+      "id": 1,
+      "postId": "-KsjWehQ--apjDBwSBCZ",
+      "star": 4,
+      "gameId": 1
+    },
+    {
+      "id": 2,
+      "postId": "-KsjWehQ--apjDBwSBCZ",
+      "star": 4,
+      "gameId": 1
+    },
+    {
+      "id": 3,
+      "postId": "-KsjWehQ--apjDBwSBCZ",
+      "star": 4,
+      "gameId": 2
+    }
   ]
 }
