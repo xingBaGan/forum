@@ -91,7 +91,9 @@ export interface Tag{
 export interface Evaluation{
   id: string
   postId: string
-  star: number
+  star: number,
+  hours:number,
+  gameId:string,
 }
 
 export interface Category{

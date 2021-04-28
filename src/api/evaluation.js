@@ -21,5 +21,12 @@ export default {
         "evaluations":res.data
       }
     })
+  },
+  createEvaluation(payload){
+    //{userId,content,publishedAt,threadId,id} to post 
+    let postId = firebase.database().ref('posts').push().key;
+    
+//{postId,star,hours,gameId}
+    return Vue.prototype.$axios.post(`/evaluations`,payload)
   }
 }

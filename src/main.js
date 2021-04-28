@@ -16,8 +16,13 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
-
-Vue.use(VueQuillEditor, /* { default global options } */)
+import VModal from 'vue-js-modal'
+Vue.use(VModal, { dialog: true })
+Vue.use(VueQuillEditor, {
+  placeholder: '输入评论',
+  // readOnly: true,
+  theme: 'snow'
+})
 
 Vue.config.productionTip = false
 Vue.component('AppDate', AppDate)

@@ -26,19 +26,22 @@
       "id": 1,
       "postId": "-KxxU6bYWl-6Xnu9g-56",
       "star": 4,
-      "gameId": 1
+      "gameId": 1,
+      "hours":23
     },
     {
       "id": 2,
       "postId": "-KsjWehQ--apjDBwSBCZ",
       "star": 1,
-      "gameId": 1
+      "gameId": 1,
+      "hours":23
     },
     {
       "id": 3,
       "postId": "-KsjWehQ--apjDBwSBCZ",
       "star": 4,
-      "gameId": 2
+      "gameId": 2,
+      "hours":23
     }
   ]
 }
