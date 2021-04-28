@@ -9,8 +9,8 @@
           <div class="img-aside">
             <div class="btns">
               <span class="btn">关注</span>
-              <span class="btn">想玩</span>
-              <span class="btn">玩过</span>
+              <span class="btn"><i class="fa fa-heart-o" aria-hidden="true"></i>想玩</span>
+              <span class="btn"><i class="fa fa-star-o" aria-hidden="true"></i>玩过</span>
             </div>
             <div class="baside">{{game.publish_time}}</div>
           </div>
@@ -110,6 +110,9 @@ export default {
 .btn {
   border: 1px solid white;
   @apply py-1 px-3 mt-3 text-white text-sm ml-2 hover:text-black hover:bg-blue-400;
+}
+.btn>i{
+  @apply mr-1;
 }
 .img-aside {
   @apply flex justify-between;

@@ -20,6 +20,7 @@
     </div>
     <post-list :posts="posts"></post-list>
     <post-editor :threadId="id" v-if="authUser"/>
+    <!-- <rich-text-editor :threadId="id" v-if="authUser"/> -->
     <div v-else class="text-center" style="mrgin-bottom:50px;">
       <router-link :to="{name:'Login',query:{redirectTo:$route.path}}">Sign in</router-link>&nbsp;or&nbsp;
       <router-link :to="{name:'Register',query:{redirectTo:$route.path}}">Register</router-link>to post a reply
@@ -32,10 +33,12 @@ import { mapGetters, mapActions } from "vuex";
 import PostEditor from "@comp/PostEditor";
 import PostList from "@comp/PostList";
 import asyncDataStatus from "@/mixins/asyncDataStatus";
+import RichTextEditor from '../components/RichTextEditor.vue';
 export default {
   components: {
     PostList,
-    PostEditor
+    PostEditor,
+    RichTextEditor
   },
   props: {
     id: {
