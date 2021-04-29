@@ -1,7 +1,7 @@
 <template>
   <div class="forum-full" v-if="asyncDataStatus_ready">
     <div class="col-full push-top">
-      <div class="forum-header">
+      <div class="forum-header forum-box">
         <div class="forum-details">
           <router-link class="t-link" :to="{name:'Game',params:{forumId:forum.id}}">{{forum.name}}</router-link>
           <p class="text-lead text-over">{{forum.description}}</p>
@@ -22,7 +22,6 @@
 import ThreadList from "@comp/ThreadList";
 import { mapGetters, mapActions } from "vuex";
 import asyncDataStatus from "@/mixins/asyncDataStatus";
-import { Promise } from "q";
 export default {
   components: {
     ThreadList
@@ -68,6 +67,7 @@ export default {
 </script>
 
 <style  scoped>
+
 .t-link {
   @apply text-5xl;
 }

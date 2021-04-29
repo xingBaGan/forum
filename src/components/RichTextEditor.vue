@@ -4,11 +4,11 @@
     ref="myQuillEditor"
     v-model="content"
     :options="editorOption"
-    @blur="onEditorBlur($event)"
-    @focus="onEditorFocus($event)"
-    @ready="onEditorReady($event)"
-  />
 
+  />
+ <!-- @blur="onEditorBlur($event)"
+    @focus="onEditorFocus($event)"
+    @ready="onEditorReady($event)" -->
   <!-- Or manually control the data synchronization -->
   <!-- <quill-editor
     :content="content"
@@ -22,11 +22,16 @@
   import Quill from 'quill'
 //   import someModule from '../yourModulePath/someQuillModule.js'
 //   Quill.register('modules/someModule', someModule)
-  
+
   export default {
+    props:{
+      content:{
+        type:String,
+      }
+    },
     data () {
       return {
-        content: '',
+
         editorOption: {
           // Some Quill options...
         }

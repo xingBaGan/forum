@@ -5,7 +5,7 @@
         <div class="flex-item-1">
           <div class="flex-box flex-around">
             <a
-              class="mr10"
+              class="ml10"
               target="_blank"
               data-role="tip-window"
               data-target=".user-card"
@@ -21,7 +21,7 @@
               />
             </a>
             <a
-              class="red mr10"
+              class="red ml10"
               target="_blank"
               data-role="tip-window"
               data-target=".user-card"
@@ -32,10 +32,10 @@
             >评价
           </div>
           <div class="flex-box flex-align-items-center play-time">
-            <span>玩过 5 小时</span>
+            <span class="time">玩过 {{evaluation.hours}} 小时</span>
             <span class="vm-star" style="margin-left: 20px">
               <i
-                class="fa fa-star"
+                class="fa fa-star" style="color:white"
                 v-for="(item, index) in evaluation.star"
                 :key="index"
               ></i>
@@ -52,9 +52,9 @@
         >
           <div class="desc sticky-box">
             <div class="tab-brief flex-box">
-              <div class="tab-brief-text flex-item-1">
-                {{ evaluation.text }}
-                <span class="show-all-btn">显示全部</span>
+              <div class="tab-brief-text flex-item-1" >
+                <span v-html="evaluation.content">{{evaluation.content}}</span>
+                <!-- <span class="show-all-btn">显示全部</span> -->
               </div>
               <div
                 class="tab-brief-img bg-img cl-vm-lazyload-img"
@@ -133,11 +133,17 @@ export default {
 </script>
 
 <style scoped>
+.ml10{
+  margin-left: 10px;
+}
+.time {
+  @apply text-gray-500 hover:text-green-700;
+}
 .avater{
   @apply rounded-full w-10 h-10 ;
 }
 .tab-brief-text {
-  @apply mb-4;
+  @apply mb-4 text-white;
 }
 .btns {
   flex: auto;
@@ -157,7 +163,9 @@ export default {
   @apply flex justify-around;
 }
 .cl-card {
-  @apply bg-green-200 p-8;
+  background-color: #263959;
+  opacity: 0.9;
+  @apply  p-8;
 }
 .outbox {
   @apply flex flex-col;

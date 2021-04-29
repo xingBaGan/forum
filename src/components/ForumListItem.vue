@@ -9,8 +9,12 @@
       <p>{{forum.description}}</p>
     </div>
     <div class="threads-count">
-      <p class="count">{{threadscount}}</p>
+      <p class="count">{{threadscount}}
+        <!-- <span class="sign">讨论</span> -->
+      </p>
       {{threadscount === 1 ? 'thread':'threads'}}
+
+
     </div>
     <div class="last-thread">
       <img v-if="lastUser" class="avatar" :src="lastUser.avatar" alt="头像" v-load-img-failed="true">
@@ -57,4 +61,9 @@ export default {
 </script>
 
 <style scoped>
+/* .sign{
+  margin-left: 10px;
+
+  font-size:16px;
+} */
 </style>

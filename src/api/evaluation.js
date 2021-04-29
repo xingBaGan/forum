@@ -22,11 +22,34 @@ export default {
       }
     })
   },
-  createEvaluation(payload){
-    //{userId,content,publishedAt,threadId,id} to post 
+  createEvaluation(payload) {
     let postId = firebase.database().ref('posts').push().key;
-    
-//{postId,star,hours,gameId}
-    return Vue.prototype.$axios.post(`/evaluations`,payload)
+    let { userId, content, publishedAt,  hours, gameId,star} = payload
+    let post = { userId, content, publishedAt};
+    post.isEvaluation = 1;
+    const updates = {}
+    updates[`posts/${postId}`] = post
+    //{userId,content,publishedAt,id} to post
+    return firebase.database().ref().update(updates).then(() => {
+      //{postId,star,hours,gameId}
+      Vue.prototype.$axios.post(`/evaluations`, { postId, star, hours, gameId })
+    })
+  },
+  updateEvaluation({ star, hours, content, postId, id } = payload) {
+    // console.log({ star, hours, content, postId, id })
+    return firebase.database().ref("posts").child(postId).get().then(function (snapshot) {
+      if (snapshot.exists()) {
+        // console.log(snapshot.val());
+        return firebase.database().ref(`posts/${postId}`).set({ ...snapshot.val(), content }).then(() => {
+          Vue.prototype.$axios.patch(`/evaluations/${id}`, { star, hours })
+        })
+      }
+      else {
+        console.log("No data available");
+      }
+    }).catch(function (error) {
+      console.error(error);
+    });
+
   }
 }

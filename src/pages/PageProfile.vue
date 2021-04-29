@@ -4,7 +4,7 @@
     <user-profile-card-editor v-else :user="user" @child-ready="asyncDataStatus_fetched"/>
     <div class="col-7 push-top">
       <div class="profile-header">
-        <span class="text-lead">{{user.username}}'s recent activity</span>
+        <span class="text-lead">{{user.username}} 的 最近活动</span>
         <a href="#">see onl started threads</a>
       </div>
       <hr>

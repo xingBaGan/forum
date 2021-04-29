@@ -2,11 +2,13 @@
   <div>
        <h1>玩过</h1>
     <div class="info">
-     <label for="game_time"> 游戏时长数:<input id="game_time" value="nuber" type="text" v-model="hours" /></label>
-      <rate :length="5"  v-model="myRate"/>
+     <label for="game_time"> 游戏时长数:<input id="game_time" value="0" type="number" v-model="hours_temp" /></label>
+      <rate :length="5"  v-model="rate_temp"/>
     </div>
-    <rich-text-editor ref="rte"/>
-    <div class="end-bar"><span @click="post" class="post-btn">提交</span></div>
+    <rich-text-editor ref="rte" :content="content"/>
+    <div class="end-bar">
+      <span @click="post" class="post-btn">{{!modiflag?"提交":"修改"}}</span>
+    </div>
   </div>
 </template>
 
@@ -14,15 +16,30 @@
 import RichTextEditor from "./RichTextEditor.vue";
 export default {
   components: { RichTextEditor },
+  props: {
+    modiflag:{type:Boolean},
+    hours: {
+      type: Number,
+      default: 0
+    },
+    rate:{
+      type: Number,
+      default: 0
+    },
+    content:{
+      type:String,
+      default:this.rteContent
+    }
+  },
   data() {
-      return {
-          hours: 0,
-          myRate:0
-      }
+    return {
+      rate_temp: this.rate,
+      hours_temp:this.hours
+    }
   },
   methods: {
       post() {
-          this.$emit('closeModal',{hours:this.hours, star:this.myRate, content:this.rteContent});
+          this.$emit('closeModal',{hours:this.hours_temp, star:this.rate_temp, content:this.rteContent});
       }
   },
   computed: {
