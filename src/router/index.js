@@ -85,7 +85,8 @@ const router = new Router({
     {
       path: '/game/:forumId',
       name: 'Game',
-      component: Game
+      component: Game,
+      meta: { requiredAuth: true }
     },
     {
       path: '*',

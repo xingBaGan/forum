@@ -48,10 +48,17 @@
     },
     {
       "postId": "-MZPz90KaSKwlr25C0_r",
-      "star": 4,
-      "hours": "34",
+      "star": 2,
+      "hours": 833,
       "gameId": 1,
       "id": 7
+    },
+    {
+      "postId": "-MZQYT1uvARZVAEH_cmx",
+      "star": 5,
+      "hours": "56",
+      "gameId": 1,
+      "id": 8
     }
   ]
 }

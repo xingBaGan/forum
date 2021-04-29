@@ -51,5 +51,25 @@ export default {
       console.error(error);
     });
 
+  },
+  likeEvaluation({postId,userId}=payload){
+   return firebase.database().ref(`posts/${postId}`).get().then((snapshot)=>{
+      let post = snapshot.val()
+      let likes = post.likes
+      console.log(likes)
+      let updates={}
+      if(likes&&likes[userId]){
+        firebase.database().ref(`posts/${postId}/likes/${userId}`).remove()
+        // delete likes[`${userId}`]
+      }else{
+        updates[`posts/${postId}/likes/${userId}`] = userId
+      }
+    return  firebase.database().ref().update(updates).then(()=>{
+       return firebase.database().ref(`posts/${postId}`).get().then((snapshot)=>{
+          // console.log(snapshot.val())
+          return Promise.resolve(snapshot.val())
+        })
+      })
+    })
   }
 }

@@ -68,13 +68,19 @@
               class="flex-box flex-align-items-center mt20 flex-align-self-end footer-info-box"
               data-sticky-column=""
             >
-              <a class="vm-btn vm-btn-vote">
-                <i class="icon cowicon cow-praise"></i>赞同
+              <a class="vm-btn vm-btn-vote" @click="likeEvaluation">
+                <template v-if="isArrovaled">
+                  <i class="icon cowicon cow-praise"></i>已赞同
+                </template>
+                <template v-else>
+                  <i class="icon cowicon cow-praise"></i>赞同
+                </template>
+                
               </a>
               <div class="flex-item-1 flex-box flex-align-items-center btns">
                 <div class="flex-box">
                   <a class="act ml white-5 pointer gl-hover-text-white"
-                    >{{ likeNum }}人赞同</a
+                    >{{ approvalNum }}人赞同</a
                   >
                   <a
                     class="ml white-5 pointer gl-hover-text-white ml10 act"
@@ -104,6 +110,7 @@
 <script>
 import AppDate from "./AppDate";
 import $api from "@/api";
+import {countObjectProperties} from '@/utils';
 export default {
   beforeMount() {
     $api.users.getUserById(this.evaluation.userId).on('value',(snapshot) => {
@@ -118,16 +125,36 @@ export default {
   data() {
     return {
       user: {},
+      likes:this.evaluation.likes
     };
+  },
+  methods: {
+      likeEvaluation(){
+        let payload = {userId:this.authId,postId:this.evaluation.postId}
+        $api.evaluations.likeEvaluation(payload).then(res=>{
+          // console.log(res);
+          // console.log(this.likes)
+          this.likes = res.likes
+        })
+    },
   },
   components: {
     AppDate,
   },
   computed: {
-    likeNum() {
-      if (!this.evaluation.likes) return 0;
-      return Object.keys(this.evaluation.likes).length;
+    // likeNum() {
+    //   if (!this.evaluation.likes) return 0;
+    //   return Object.keys(this.evaluation.likes).length;
+    // },
+    isArrovaled(){
+      return !this.likes?false:(this.likes[this.authId]?true:false);
     },
+     authId(){
+      return this.$store.state.auth.authId;
+    },
+    approvalNum(){
+      return countObjectProperties(this.likes)
+    }
   },
 };
 </script>

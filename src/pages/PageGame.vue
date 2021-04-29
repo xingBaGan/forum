@@ -8,7 +8,7 @@
           <h3 class="desc">{{ game.description }}</h3>
           <div class="img-aside">
             <div class="btns">
-              <span class="btn">关注</span>
+              <span @click="concernOn" class="btn">关注</span>
               <template v-if="!hasEvaluatedItem">
                  <span class="btn"
                 ><i class="fa fa-heart-o" aria-hidden="true"></i>想玩</span
@@ -48,7 +48,7 @@ import $api from "../api";
 import asyncDataStatus from "@/mixins/asyncDataStatus";
 import EvaluationList from "../components/EvaluationList.vue";
 import EvaluationEditor from '../components/EvaluationEditor'
-import evaluation from '../api/evaluation';
+// import evaluation from '../api/evaluation';
 export default {
   mixins: [asyncDataStatus],
   components: {
@@ -67,6 +67,13 @@ export default {
     };
   },
   methods: {
+    concernOn(){
+     if(this.game.follower) this.game.follower = [...this.game.follower,this.userId];
+      else  this.game.follower = [this.userId];
+      $api.games.updateGameById(this.game.id,this.game).then(res=>{
+        console.log(res);
+      })
+    },
     showModal() {
      if(this.couldModi){
         let {hours,content,star} = this.hasEvaluatedItem
@@ -103,15 +110,21 @@ export default {
       $api.evaluations.getEvaluationByGameId(this.game.id).then((res) => {
         res["postResolved"].then((refs) => {
           refs.forEach((ref, index) => {
-            ref.on("value", (snapshot) => {
+            ref.once("value", (snapshot) => {
               // console.log(snapshot.key)
-             if(!this.list.find(evaluation=>{
+              let item =this.list.find(evaluation=>{
                return evaluation.postId == snapshot.key
-             })){
+             })
+             if(!item){
                 this.list.push({
                 ...snapshot.val(),
                 ...res["evaluations"][index],
               });
+             }else{
+               item = {
+                ...snapshot.val(),
+                ...res["evaluations"][index],
+              }
              }
             });
           });
@@ -136,7 +149,7 @@ export default {
     },
     score(){
       const reducer = (accumulator, evaluation) => accumulator + evaluation.star;
-      return this.list.reduce(reducer,0)/this.list.length;
+      return (this.list.reduce(reducer,0)/this.list.length).toFixed(2);
     },
     couldModi(){
       return this.hasEvaluatedItem?true:false;

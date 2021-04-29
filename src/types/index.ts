@@ -73,6 +73,7 @@ export interface Game{
   developer: string
   publisher: string
   lang: Array
+  follower:Array
   platforms: Array
   tags: Array
   item_provider: Array
