@@ -8,7 +8,7 @@ export default {
     return Vue.prototype.$axios.get(`/games/${id}`);
   },
   updateGameById(id,game) {
-    return Vue.prototype.$axios.post(`/games/${id}`,game);
+    return Vue.prototype.$axios.patch(`/games/${id}`,game);
   },
   getGameByForumId(forumId) {
     return Vue.prototype.$axios.get(`/games?forumId=${forumId}`);

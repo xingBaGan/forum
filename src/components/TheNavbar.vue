@@ -29,30 +29,30 @@
           <div class="triangle-drop"></div>
           <ul class="dropdown-menu">
             <li class="dropdown-menu-item">
-              <router-link :to="{name: 'Profile'}">View Profile</router-link>
+              <router-link :to="{name: 'Profile'}">主页</router-link>
             </li>
             <li class="dropdown-menu-item">
               <a
                 @click.prevent="$store.dispatch('auth/signOut').then(()=>{$router.push({name:'Home'})})"
-              >Sign Out</a>
+              >登出</a>
             </li>
           </ul>
         </div>
         <li class="navbar-mobile-item">
-          <router-link :to="{name: 'Profile'}">View Profile</router-link>
+          <router-link :to="{name: 'Profile'}">主页</router-link>
         </li>
         <li class="navbar-mobile-item">
           <a
             @click.prevent="$store.dispatch('auth/signOut').then(()=>{$router.push({name:'Home'})})"
-          >Sign Out</a>
+          >登出</a>
         </li>
       </ul>
       <ul v-else>
         <li class="navbar-item">
-          <router-link :to="{name: 'Login'}">Sign In</router-link>
+          <router-link :to="{name: 'Login'}">登入</router-link>
         </li>
         <li class="navbar-item">
-          <router-link :to="{name: 'Register'}">Register</router-link>
+          <router-link :to="{name: 'Register'}">注册</router-link>
         </li>
       </ul>
     </nav>

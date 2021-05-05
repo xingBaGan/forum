@@ -8,7 +8,7 @@
           <h3 class="desc">{{ game.description }}</h3>
           <div class="img-aside">
             <div class="btns">
-              <span @click="concernOn" class="btn">关注</span>
+              <span @click="concernOn" class="btn">{{subscribed?"取消关注":"关注"}}</span>
               <template v-if="!hasEvaluatedItem">
                  <span class="btn"
                 ><i class="fa fa-heart-o" aria-hidden="true"></i>想玩</span
@@ -68,8 +68,15 @@ export default {
   },
   methods: {
     concernOn(){
-     if(this.game.follower) this.game.follower = [...this.game.follower,this.userId];
-      else  this.game.follower = [this.userId];
+     if(this.game.followers){
+        if(!this.subscribed){
+           this.game.followers = [this.userId,...this.game.followers]
+        }else{
+          let index = this.game.followers.findIndex(follow => follow == this.userId)
+          this.game.followers.splice(index,1)
+        }
+     }
+      else  this.game.followers = [this.userId];
       $api.games.updateGameById(this.game.id,this.game).then(res=>{
         console.log(res);
       })
@@ -136,6 +143,11 @@ export default {
   },
   mixins: [asyncDataStatus],
   computed: {
+    subscribed(){
+      if(!this.game.followers) return false;
+      if(!this.game.followers.length) return false;
+     return this.game.followers.includes(this.userId)
+    },
     forumId() {
       return this.$route.params.forumId;
     },

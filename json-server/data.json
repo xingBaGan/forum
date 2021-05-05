@@ -8,7 +8,10 @@
       "number": "暂无评分 ",
       "tags": [],
       "description": "《英雄联盟》（League of Legends，简称LOL）是由美国拳头游戏（Riot Games）开发、中国内地由腾讯游戏代理运营的英雄对战MOBA竞技网游。游戏里拥有数百个个性英雄，并拥有排位系统、符文系统等特色养成系统。",
-      "forumId": "-KpOx5Y4AqRr3sB4Ybwj"
+      "forumId": "-KpOx5Y4AqRr3sB4Ybwj",
+      "followers": [
+        "LLamlptVlIVM63R7Zb44k8N3Lt22"
+      ]
     },
     {
       "id": 2,
@@ -59,6 +62,13 @@
       "hours": "56",
       "gameId": 1,
       "id": 8
+    },
+    {
+      "postId": "-MZRFb1b898zv33gZx-6",
+      "star": 3,
+      "hours": "34",
+      "gameId": 1,
+      "id": 9
     }
   ]
 }
