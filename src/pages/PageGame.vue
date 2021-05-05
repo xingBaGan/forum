@@ -68,17 +68,20 @@ export default {
   },
   methods: {
     concernOn(){
-     if(this.game.followers){
-        if(!this.subscribed){
-           this.game.followers = [this.userId,...this.game.followers]
-        }else{
-          let index = this.game.followers.findIndex(follow => follow == this.userId)
-          this.game.followers.splice(index,1)
-        }
-     }
-      else  this.game.followers = [this.userId];
-      $api.games.updateGameById(this.game.id,this.game).then(res=>{
-        console.log(res);
+    //  if(this.game.followers){
+    //     if(!this.subscribed){
+    //        this.game.followers = [this.userId,...this.game.followers]
+    //     }else{
+    //       let index = this.game.followers.findIndex(follow => follow == this.userId)
+    //       this.game.followers.splice(index,1)
+    //     }
+    //  }
+    //   else  this.game.followers = [this.userId];
+    //   $api.games.updateGameById(this.game.id,this.game).then(res=>{
+    //     console.log(res);
+    //   })
+      $api.games.concernedOnGame({authId:this.userId,game:this.game,subscribed:this.subscribed}).then((res)=>{
+        console.log(res)
       })
     },
     showModal() {

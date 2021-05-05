@@ -8,6 +8,7 @@ export interface User{
   phone_number: string
   last_visit_at: timestamp
   registered_at: timestamp
+  concerned_games:Array
   avater: string
   bio: string
   posts: Array

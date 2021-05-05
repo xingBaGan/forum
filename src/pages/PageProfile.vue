@@ -50,8 +50,7 @@ export default {
   },
   beforeCreate() {
     this.$store.dispatch("auth/fetchAuthUser").then(user => {
-      this.$store
-        .dispatch("posts/fetchPosts", { ids: Object.keys(user.posts) })
+      this.$store.dispatch("posts/fetchPosts", { ids:user.posts? Object.keys(user.posts):[] })
         .then(() => {
           this.asyncDataStatus_fetched();
         });
