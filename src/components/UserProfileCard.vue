@@ -10,17 +10,18 @@
       <span v-else>no bio specified</span>
     </p>
     <span class="online">{{user.username}} is online</span>
+    <span > 总共{{task.points}} 积分</span>
     <div class="stats">
       <span>{{userPostsCount}} posts</span>
       <span>{{userThreadsCount}} threads</span>
     </div>
     <hr>
-    <p v-if="user.website" class="text-large text-center">
+    <p v-if="user.website" class="text-center text-large">
       <i class="fa-globe fa">
         <a :href="user.website">{{user.website}}</a>
       </i>
     </p>
-    <p class="text-xsmall text-faded text-center">Member since june 2003, last visited 4 hours ago</p>
+    <p class="text-center text-xsmall text-faded">Member since june 2003, last visited 4 hours ago</p>
     <div class="text-center">
       <hr>
       <router-link :to="{name:'ProfileEdit'}" class="btn-green btn-small">Edit profile</router-link>
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   props: {
     user: {
@@ -44,6 +46,7 @@ export default {
     }
   },
   computed: {
+    ...mapState("auth",["task"]),
     userThreadsCount() {
       return this.$store.getters["users/userThreadsCount"](this.user.id);
     },

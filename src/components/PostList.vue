@@ -12,8 +12,7 @@ export default {
   },
   props: {
     posts: {
-      required: true,
-      type: Array || undefined
+      required: true
     }
   }
 };

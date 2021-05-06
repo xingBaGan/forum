@@ -8,6 +8,7 @@
 <script>
 import moment from "moment";
 import $api from "@/api";
+import {mapActions,mapState} from 'vuex'
 // moment.locale("zh-cn");
 export default {
   props: {
@@ -17,7 +18,7 @@ export default {
   },
   data() {
     return {
-      checkInData: [
+      // checkInData: [
         // {
         //   time: "2021-05-06 08:52", //日期可以直接用2018/01/12 08:52这种正规格式，避免ios解析【-】分割的出问题
         //   amount: 3 //所得金币
@@ -26,37 +27,35 @@ export default {
         //   time: "2021-05-04 08:52",
         //   amount: 10
         // }
-      ],
-      task:{}
+      // ]
     };
   },
   methods: {
+     ...mapActions("auth", ["fetchTask","checkInByDay"]),
     checkIn() {
        this.$emit('check-out')
-        this.checkInData.push({
+       let today ={
           time:this.todayTime, //日期可以直接用2018/01/12 08:52这种正规格式，避免ios解析【-】分割的出问题
           amount: 3 //所得金币
-        })
-        this.checkInData.forEach(item=>{
-          this.task.points += item.amount
-        })
-        $api.tasks.checkIn(this.task).then(()=>{
-            console.log("跟新")
-        })
+        };
+        this.checkInByDay(today)
     }
   },
   computed: {
+    ...mapState("auth",["task"]),
     todayTime() {
       return moment(Date.now()).format("YYYY-MM-DD HH:mm");
     },
     hasChecked(){
       return this.$refs.checkCalendar.hasCheckin
+    },
+    checkInData(){
+      return  this.$store.state.auth.task.checkInData;
     }
   },
   created(){
     $api.tasks.getTaskByUserId(this.userId).then(res=>{
-      this.task = res.data[0]
-     this.checkInData = res.data[0].checkInData
+      this.fetchTask()
     })
   }
 };

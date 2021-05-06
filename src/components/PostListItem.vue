@@ -121,12 +121,18 @@ export default {
   },
   methods: {
     ...mapActions("posts", ["likePost"]),
+    ...mapActions("auth", ["addPoints"]),
     getReplies() {
       if (!this.post.replies) return;
       let ids = Object.keys(this.post.replies);
       $api.posts.getRepliesByReplyIds({ ids: ids }).then(res => {
         this.replies = res.map(item => item.val());
       });
+    },
+    add(){
+      this.isLiked = !this.isLiked;
+      if(this.isLiked) this.addPoints(3)//喜爱增加3分
+      else  this.addPoints(-3)
     },
     expansionComments() {
       this.isActive = !this.isActive;
@@ -144,7 +150,7 @@ export default {
         });
     },
     like() {
-      this.isLiked = !this.isLiked;
+      this.add();
       let payload = {
         like: this.isLiked,
         postId: this.post.id

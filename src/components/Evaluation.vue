@@ -75,7 +75,7 @@
                 <template v-else>
                   <i class="icon cowicon cow-praise"></i>赞同
                 </template>
-                
+
               </a>
               <div class="flex-item-1 flex-box flex-align-items-center btns">
                 <div class="flex-box">
@@ -113,7 +113,7 @@ import $api from "@/api";
 import {countObjectProperties} from '@/utils';
 export default {
   beforeMount() {
-    $api.users.getUserById(this.evaluation.userId).on('value',(snapshot) => {
+    $api.users.getUserById(this.evaluation.userId).then((snapshot) => {
       this.user =snapshot.val()
     });
   },
