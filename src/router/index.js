@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import Home from '@/pages/PageHome'
+import PageAdmin from '@/pages/PageAdmin'
 import Game from '@/pages/PageGame'
 import ThreadShow from '@/pages/PageThreadShow'
 import PageNotFound from '@/pages/PageNotFound'
@@ -21,6 +22,11 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/admin',
+      name: 'PageAdmin',
+      component: PageAdmin
     }, {
       path: '/profile',
       name: 'Profile',
