@@ -81,7 +81,7 @@ export default {
     //     console.log(res);
     //   })
       $api.games.concernedOnGame({authId:this.userId,game:this.game,subscribed:this.subscribed}).then((res)=>{
-        console.log(res)
+        // console.log(res)
       })
     },
     showModal() {
@@ -97,7 +97,7 @@ export default {
     updateEvaluation($event){
       let payload = {postId:this.hasEvaluatedItem.postId,id:this.hasEvaluatedItem.id,...$event}
       $api.evaluations.updateEvaluation(payload).then(()=>{
-        console.log('更新成功')
+        // console.log('更新成功')
          this.$modal.hide('evaluation-dialog')
           this.getGameInfo();
       })

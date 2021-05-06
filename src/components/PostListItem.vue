@@ -24,9 +24,9 @@
       </div>
     </div>
     <div class="post-date text-faded">
-      <span class="iconfont icon-custom-love " :class="{'icon-love':isLiked}" @click="like"></span>
-     <span class="like"> {{likeLen}}</span>
-
+      <span @click="expansionComments" class="comment-btn">{{!isActive?replyCount+"条评论":"收起评论"}}</span>
+      <span class="iconfont icon-custom-love" :class="{'icon-love':isLiked}" @click="like"></span>
+      <span class="like">{{likeLen}}</span>
       <div class="rel iconfont icon-arrowdown pos">
         <ul class="oth-bths">
           <li @click="report">
@@ -40,21 +40,30 @@
       <div v-if="post.edited" class="edition-info">edited</div>
       <AppDate :timestamp="post.publishedAt"/>
     </div>
+    <div class="comment" :class="{'comment-show':isActive}">
+      <reply-list :replies="replies"></reply-list>
+      <reply-editor @reply="reply($event)"></reply-editor>
+    </div>
   </div>
 </template>
 
 <script>
-
-
 import PostEditor from "./PostEditor";
+import ReplyList from "./ReplyList";
+import ReplyEditor from "./ReplyEditor";
+import $api from "../api/index.js";
 import { mapActions } from "vuex";
+import { countObjectProperties } from "@/utils";
 export default {
   components: {
-    PostEditor
+    PostEditor,
+    ReplyList,
+    ReplyEditor
   },
   props: {
-    post: {//传入的post.likes 不会响应式的
-    //必须在下面获取store itmes 中的值
+    post: {
+      //传入的post.likes 不会响应式的
+      //必须在下面获取store itmes 中的值
       required: true,
       type: Object
     }
@@ -64,13 +73,17 @@ export default {
       editing: false,
       isLiked: false,
       collected: false,
-      likeLen: 0
+      likeLen: 0,
+      isActive: false,
+      replies: []
     };
   },
   beforeMount() {
     //TODO:喜爱功能
     if (this.$store.state.posts.items[this.post.id].likes)
-      this.likeLen = Object.keys(this.$store.state.posts.items[this.post.id].likes).length ;
+      this.likeLen = Object.keys(
+        this.$store.state.posts.items[this.post.id].likes
+      ).length;
     if (!this.$store.state.posts.items[this.post.id].likes) {
       this.isLiked = false;
       return;
@@ -81,10 +94,16 @@ export default {
       ? true
       : false;
   },
+  created() {
+    this.getReplies();
+  },
   computed: {
     // post_likes() {
     //   return this.$store.state.posts.items[this.post.id].likes;
     // },
+    replyCount() {
+      return countObjectProperties(this.post.replies);
+    },
     canEdit() {
       return this.user && this.user.id === this.$store.state.auth.authId;
     },
@@ -102,6 +121,28 @@ export default {
   },
   methods: {
     ...mapActions("posts", ["likePost"]),
+    getReplies() {
+      if (!this.post.replies) return;
+      let ids = Object.keys(this.post.replies);
+      $api.posts.getRepliesByReplyIds({ ids: ids }).then(res => {
+        this.replies = res.map(item => item.val());
+      });
+    },
+    expansionComments() {
+      this.isActive = !this.isActive;
+    },
+    reply($event) {
+      let content = $event.content;
+      $api.posts
+        .postReply({
+          repliedPostId: this.post.id,
+          content,
+          userId: this.user.id
+        })
+        .then(() => {
+          this.getReplies();
+        });
+    },
     like() {
       this.isLiked = !this.isLiked;
       let payload = {
@@ -113,7 +154,8 @@ export default {
           res.like ? "add post 💌" + res.postId : "remove post 💌" + res.postId
         );
         this.likeLen = this.$store.state.posts.items[this.post.id]
-          ? Object.keys(this.$store.state.posts.items[this.post.id].likes).length
+          ? Object.keys(this.$store.state.posts.items[this.post.id].likes)
+              .length
           : 0;
       });
     },
@@ -126,12 +168,23 @@ export default {
 </script>
 
 <style scoped>
+.comment {
+  display: none;
+  @apply bg-blue-300 flex-1;
+}
+.comment-show {
+  display: block;
+}
+
 .rel {
   @apply relative;
 }
 .pos {
   display: inline;
   @apply mr-4;
+}
+.comment-btn {
+  @apply mr-4 hover:text-green-500;
 }
 .oth-bths {
   min-width: 80px;
@@ -144,7 +197,7 @@ export default {
   position: absolute;
   @apply shadow-2xl bg-blue-700 opacity-60 p-2;
 }
-.like{
+.like {
   @apply pr-4;
 }
 

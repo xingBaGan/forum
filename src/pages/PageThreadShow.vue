@@ -22,8 +22,8 @@
     <post-editor :threadId="id" v-if="authUser"/>
     <!-- <rich-text-editor :threadId="id" v-if="authUser"/> -->
     <div v-else class="text-center" style="mrgin-bottom:50px;">
-      <router-link :to="{name:'Login',query:{redirectTo:$route.path}}">Sign in</router-link>&nbsp;or&nbsp;
-      <router-link :to="{name:'Register',query:{redirectTo:$route.path}}">Register</router-link>to post a reply
+      <router-link :to="{name:'Login',query:{redirectTo:$route.path}}">登录</router-link>&nbsp;或者&nbsp;
+      <router-link :to="{name:'Register',query:{redirectTo:$route.path}}">注册</router-link>才能够去讨论
     </div>
   </div>
 </template>
@@ -79,10 +79,12 @@ export default {
       //find the repiles
       let repiles = Object.keys(this.thread.posts)
         .filter(postId => postId !== this.thread.firstPostId)
-        .map(postId => this.$store.state.posts[postId]);
+        .map(postId => this.$store.state.posts.items[postId]);
+
       // get the user ids
       const userIds = repiles.map(post => post && post.userId);
       //count the unique ids
+
       return userIds.filter((item, index) => {
         return userIds.indexOf(item) === index;
       }).length;

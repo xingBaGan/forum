@@ -8,8 +8,9 @@
         </div>
         <router-link
           :to="{name:'ThreadCreate',params:{forumId:this.forum.id}}"
-          class="btn-green btn-small"
-        >start a thread</router-link>
+          class="btn-green btn-small" style="
+    width: 200px;"
+        >新建话题</router-link>
       </div>
     </div>
     <div class="col-full push-top">

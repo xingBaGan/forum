@@ -42,7 +42,7 @@ export interface Post{
   content: string
   threadId: string
   userId: string
-  replys: Array
+  replies: Array
   likes: Array
 }
 
@@ -115,4 +115,12 @@ export interface Complaint{
   status: string
 }
 
-
+export interface Task{
+  userId: String
+  checkInData: Array[]
+  points: number
+}
+export interface timeItem{
+  time: string
+  amount:number
+}

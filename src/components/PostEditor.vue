@@ -11,6 +11,8 @@
         v-on:input="newPostTest=$event.target.value"
         @blur="$v.newPostTest.$touch()"
       ></textarea>
+
+      <!-- <rich-text-editor  class="form-input"  @blur="$v.newPostTest.$touch()" ref="rte" :content="newPostTest"  v-on:input="newPostTest=$event.target.value"/> -->
       <template v-if="$v.newPostTest.$error">
         <span v-if="!$v.newPostTest.required" class="form-error">Thread must have some content</span>
         <span
@@ -29,7 +31,11 @@
 <script>
 import { required, minLength } from "vuelidate/lib/validators";
 import { mapActions } from "vuex";
+// import RichTextEditor from "./RichTextEditor.vue";
 export default {
+  components: {
+    // RichTextEditor,
+  },
   props: {
     threadId: {
       type: String,
@@ -53,7 +59,10 @@ export default {
   computed: {
     isUpdate() {
       return !!this.post;
-    }
+    },
+    //  rteContent() {
+    //       return this.$refs.rte.htmlContent
+    // }
   },
   methods: {
     ...mapActions("posts", ["createPost", "updatePost"]),
@@ -93,5 +102,8 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style  >
+.ql-editor{
+  height:300px;
+}
 </style>

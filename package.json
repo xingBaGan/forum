@@ -20,6 +20,7 @@
     "postcss": "^8.2.9",
     "tailwindcss": "^2.1.1",
     "vue": "^2.5.2",
+    "vue-checkin": "^1.0.5",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-quill-editor": "^3.0.6",
     "vue-rate": "^2.4.0",

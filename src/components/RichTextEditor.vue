@@ -2,7 +2,7 @@
   <!-- Two-way Data-Binding -->
   <quill-editor
     ref="myQuillEditor"
-    v-model="content"
+    v-model="htmlContent"
     :options="editorOption"
 
   />
@@ -31,7 +31,7 @@
     },
     data () {
       return {
-
+        htmlContent:this.content,
         editorOption: {
           // Some Quill options...
         }

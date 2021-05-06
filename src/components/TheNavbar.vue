@@ -28,6 +28,10 @@
         <div id="user-dropdown" :class="{'active-drop': userDropdownOpen}">
           <div class="triangle-drop"></div>
           <ul class="dropdown-menu">
+             <li class="dropdown-menu-item relti">
+              <label for="show-check">签到</label><input  :checked="checked" id="show-check" type="checkbox" onclick="return false" />
+              <check-in :userId="user.id" @check-out="checkdate" ref="checkCalendar" class="check-in"></check-in>
+            </li>
             <li class="dropdown-menu-item">
               <router-link :to="{name: 'Profile'}">主页</router-link>
             </li>
@@ -36,6 +40,7 @@
                 @click.prevent="$store.dispatch('auth/signOut').then(()=>{$router.push({name:'Home'})})"
               >登出</a>
             </li>
+
           </ul>
         </div>
         <li class="navbar-mobile-item">
@@ -62,12 +67,17 @@
 <script>
 import clickOutside from "@/directives/click-outside";
 import handleScroll from "@/directives/handle-scroll";
+import CheckIn from '../components/CheckIn'
 import { mapGetters } from "vuex";
 export default {
+  components: {
+    CheckIn,
+  },
   data() {
     return {
       userDropdownOpen: true,
-      mobileNavOpen: false
+      mobileNavOpen: false,
+      checked:true
     };
   },
   directives: {
@@ -77,9 +87,15 @@ export default {
   computed: {
     ...mapGetters("auth", {
       user: "authUser"
-    })
+    }),
+    hasChecked(){
+      return this.$refs.checkCalendar.hasChecked;
+    }
   },
   methods: {
+    checkdate(){
+      this.checked = true;
+    },
     closeUserDropdown() {
       this.userDropdownOpen = false;
     },
@@ -95,4 +111,20 @@ export default {
 </script>
 
 <style scoped>
+.relti{
+  @apply relative;
+}
+
+#show-check~.check-in{
+   display:block;
+}
+#show-check:checked~.check-in{
+  display:none;
+}
+.relti:hover{
+  @apply bg-blue-600;
+}
+ .relti:hover>#show-check:checked~.check-in{
+  display:block;
+}
 </style>

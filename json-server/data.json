@@ -70,5 +70,41 @@
       "gameId": 1,
       "id": 9
     }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "userId": "bG7o5eFwHdaUZJubLEMICiiKYM03",
+      "checkInData": [
+        {
+          "time": "2021-05-04 08:52",
+          "amount": 3
+        },
+        {
+          "time": "2021-05-05 09:52",
+          "amount": 5
+        },
+        {
+          "time": "2021-05-06 19:50",
+          "amount": 3
+        }
+      ],
+      "points": 11
+    },
+    {
+      "id": 2,
+      "userId": "jUjmgCurRRdzayqbRMO7aTG9X1G2",
+      "checkInData": [
+        {
+          "time": "2021-05-04 08:52",
+          "amount": 3
+        },
+        {
+          "time": "2021-05-05 08:52",
+          "amount": 10
+        }
+      ],
+      "points": 13
+    }
   ]
 }

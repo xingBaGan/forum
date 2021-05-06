@@ -17,6 +17,7 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 import VModal from 'vue-js-modal'
+import Vuecheckin from 'vue-checkin'
 Vue.use(VModal, { dialog: true })
 Vue.use(VueQuillEditor, {
   placeholder: '输入评论',
@@ -28,9 +29,8 @@ Vue.config.productionTip = false
 Vue.component('AppDate', AppDate)
 /* eslint-disable no-new */
 Vue.use(Vuelidate)
-
-
 Vue.use(rate)
+Vue.use(Vuecheckin)
 var firebaseConfig = {
   apiKey: "AIzaSyBmjJWvDgEuRWryS2f9NZzDRiXkZpQASbc",
   authDomain: "vue-school-forum-69951.firebaseapp.com",
