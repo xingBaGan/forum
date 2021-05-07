@@ -112,10 +112,24 @@
         {
           "time": "2021-05-06 21:40",
           "amount": 3
+        },
+        {
+          "time": "2021-05-07 18:07",
+          "amount": 3
         }
       ],
-      "points": 3,
+      "points": 6,
       "id": 3
+    }
+  ],
+  "complaints": [
+    {
+      "userId": "7lRUpl3pCYUEi1B1fvsDV0wLkNJ3",
+      "postId": "-KvgjI6bfbWYlbYV5nds",
+      "timestamp": 1620400739,
+      "status": 0,
+      "reason": "与游戏无关,谩骂，歧视，侮辱,垃圾广告,出格的色情，暴力",
+      "id": 2
     }
   ]
 }

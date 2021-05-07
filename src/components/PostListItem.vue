@@ -29,8 +29,8 @@
       <span class="like">{{likeLen}}</span>
       <div class="rel iconfont icon-arrowdown pos">
         <ul class="oth-bths">
-          <li @click="report">
-            <span class="iconfont icon-warning pos"></span>举报
+          <li @click="complain">
+            <span  class="iconfont icon-warning pos">{{complained?"取消举报":"举报"}}</span>
           </li>
           <li @click="collect">
             <span class="iconfont icon-shoucang pos" :class="{'icon-shoucang-filled':collected}"></span>收藏
@@ -51,7 +51,6 @@
 import PostEditor from "./PostEditor";
 import ReplyList from "./ReplyList";
 import ReplyEditor from "./ReplyEditor";
-import $api from "../api/index.js";
 import { mapActions } from "vuex";
 import { countObjectProperties } from "@/utils";
 export default {
@@ -75,7 +74,8 @@ export default {
       collected: false,
       likeLen: 0,
       isActive: false,
-      replies: []
+      replies: [],
+      complained:false
     };
   },
   beforeMount() {
@@ -98,9 +98,6 @@ export default {
     this.getReplies();
   },
   computed: {
-    // post_likes() {
-    //   return this.$store.state.posts.items[this.post.id].likes;
-    // },
     replyCount() {
       return countObjectProperties(this.post.replies);
     },
@@ -122,6 +119,21 @@ export default {
   methods: {
     ...mapActions("posts", ["likePost"]),
     ...mapActions("auth", ["addPoints"]),
+    complain(){
+      this.showModel()
+       let timestamp =Math.floor(Date.now() / 1000);
+      let complaint ={
+        userId:this.$store.state.auth.authId,
+        postId:this.post.id,
+        timestamp:timestamp,
+        status:0
+      }
+      this.$parent.$emit("postComplaint", complaint)
+      this.complained = !this.complainted;
+    },
+    showModel(){
+     this.$modal.show('complaint-dialog');
+  },
     getReplies() {
       if (!this.post.replies) return;
       let ids = Object.keys(this.post.replies);
@@ -168,7 +180,7 @@ export default {
     collect() {
       this.collected = !this.collected;
     },
-    report() {}
+
   }
 };
 </script>
@@ -193,7 +205,7 @@ export default {
   @apply mr-4 hover:text-green-500;
 }
 .oth-bths {
-  min-width: 80px;
+  min-width: 200px;
   height: 60px;
   text-align: left;
   top: 10px;

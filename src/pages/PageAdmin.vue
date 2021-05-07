@@ -11,7 +11,10 @@
                 Name
               </th>
               <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                Title
+                Record
+              </th>
+               <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                Complaints
               </th>
               <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                 Status
@@ -25,7 +28,7 @@
             </tr>
           </thead>
           <tbody class="">
-            <tr v-for="(user,index) in userList" :key="index">
+            <tr v-for="(user,index) in userList" @click.capture="getData($event)" :key="index" :data-index="index" :data-editing="false">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="base-info">
                   <div class="icon-box">
@@ -41,10 +44,14 @@
                   </div>
                 </div>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                <div class="text-sm text-gray-500">Optimization</div>
+              <td class="px-6 py-4 whitespace-nowrap" >
+                <div class="answer">回答了{{user.posts|countObjectProperties}}问题</div>
+                <div class="thread">发起{{user.threads|countObjectProperties}}讨论</div>
               </td>
+              <td class="px-6 py-4 whitespace-nowrap" >
+               <div class="complaint" :class="{'complaint-safe':!user.complaints}">受到{{user.complaints|countObjectProperties}}举报</div>
+              </td>
+
               <td class="px-6 py-4 whitespace-nowrap">
                 <span class="active-status">
                   Active
@@ -68,6 +75,7 @@
 <script>
 import asyncDataStatus from "@/mixins/asyncDataStatus";
 import $api from '../api/index.js'
+import {countObjectProperties} from '../utils/index.js'
   export default {
       mixins: [asyncDataStatus],
       data() {
@@ -80,11 +88,31 @@ import $api from '../api/index.js'
             this.userList = snapshot.val()
              this.asyncDataStatus_fetched();
           })
-      }
+      },
+      filters: {
+        "countObjectProperties": countObjectProperties
+      },
+      methods: {
+        getData($event) {
+          console.log($event)
+        }
+      },
   }
 </script>
 
 <style scoped>
+.complaint{
+  @apply text-sm text-red-600;
+}
+.complaint-safe{
+  @apply text-sm text-green-600;
+}
+.answer{
+  @apply text-sm text-gray-900;
+}
+.thread{
+  @apply text-sm text-gray-500;
+}
 .base-info{
   @apply flex items-center;
 }
@@ -118,13 +146,13 @@ th{
 .user-icon{
   @apply w-10 h-10 rounded-full;
 }
-tbody>tr>td:nth-child(n-2){
+tbody>tr>td:nth-child(n-3){
   @apply px-6 py-4 whitespace-nowrap;
 }
-tbody>tr>td:nth-child(4){
+tbody>tr>td:nth-child(5){
   @apply px-6 py-4 text-sm text-gray-500 whitespace-nowrap;
 }
-tbody>tr>td:nth-child(5){
+tbody>tr>td:nth-child(6){
   @apply px-6 py-4 text-sm font-medium text-right whitespace-nowrap;
 }
 .active-status{

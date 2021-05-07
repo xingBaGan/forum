@@ -17,6 +17,7 @@ export interface User{
   threads: Array
   followers: Array
   is_tourist: boolean
+  complaints:Array
 }
 
 export interface Thread{
