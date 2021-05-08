@@ -9,17 +9,18 @@
 - [x] 游客可以查看讨论，可以根据分类找到不同的论坛，查看讨论
 - [ ] 查看其他用户的基本信息
 - [x] 用户查看自己的profile,与最近发表的言论并进行修改
-- []  修改之后可以看到修改的时间
+- [X]  修改之后可以看到修改的时间
 - [x] 用户登录，注册
 - [x] 注册等表单校验 【用到 vuelidate】
     * [x] 对于已经注册的用户名即邮箱进行限制
     * [x] 对于发表言论长度，密码等进行限制
 - [x] 用户发送讨论，可以查看发表的时间
 - [x] 可以修改评论
-- [] 在其他用户发言下发表言论
+- [X] 在其他用户发言下发表言论
 - [x] 用户可以发起讨论
 - [x] 响应式
-
+- [X] 可以给其他用户点赞，举报
+- [X] 管理员可以去管理员页面
 #### 使用到的依赖
 * momentjs
 * vuelidate
@@ -32,7 +33,7 @@ npm install
 
 # serve with hot reload at localhost:8080
 npm run dev
-
+npm run dev-server
 # build for production with minification
 npm run build
 
@@ -60,3 +61,5 @@ https://github.com/tailwindlabs/tailwindcss/issues/231
 并且我的
 > // require('autoprefixer')
 插件使用会报错注意！！
+
+##issue1 不是到为什么不能之间vue 中 直接使用工具类class

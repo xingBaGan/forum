@@ -25,8 +25,9 @@ const router = new Router({
     },
     {
       path: '/admin',
-      name: 'PageAdmin',
-      component: PageAdmin
+      name: 'Admin',
+      component: PageAdmin,
+      meta: {requireAdmin:true}
     }, {
       path: '/profile',
       name: 'Profile',
@@ -120,7 +121,16 @@ router.beforeEach((to, from, next) => {
       } else {
         next({ name: "Home" });
       }
-    } else {
+    } else if (to.matched.some(route => route.meta.requireAdmin)) {
+      store.dispatch('auth/fetchAuthUser').then(user => {
+        debugger
+        if (!user.isAdmin) {
+          next({ name: "Home" });
+        }
+        next()
+      })
+
+    }else{
       next()
     }
   })

@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody class="">
-            <tr v-for="(user,index) in userList" @click.capture="getData($event)" :key="index" :data-index="index" :data-editing="false">
+            <tr v-for="(user,index) in userList" :key="index"  :data-editing="false">
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="base-info">
                   <div class="icon-box">
@@ -49,7 +49,7 @@
                 <div class="thread">发起{{user.threads|countObjectProperties}}讨论</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap" >
-               <div class="complaint" :class="{'complaint-safe':!user.complaints}">受到{{user.complaints|countObjectProperties}}举报</div>
+               <div class="complaint" :data-index="index" @click="user.complaints?getData($event):''" :class="{'complaint-safe':!user.complaints}">受到{{user.complaints|countObjectProperties}}举报</div>
               </td>
 
               <td class="px-6 py-4 whitespace-nowrap">
@@ -64,11 +64,25 @@
                 <a href="#" class="edit-btn">Edit</a>
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
     </div>
   </div>
+   <modal name="complaints-dialog"  width="800" height="450" :adaptive="true">
+     <ul>
+       <li v-for="(item,index) in complaintsCash" :key="item.id">
+         <div v-if="cashedPost[index]">{{cashedPost[index].text}}</div>
+         <div>被举报原因： {{item.reason}}</div>
+         <div>举报状态: {{item.status|complaintStatus}}</div>
+         <div>举报时间 {{item.timestamp}}</div>
+         <div>审核人 {{item.comfirmed_by}}</div>
+         <span class="complaint-accepted" @click="dealWithComplaint(index,1)">举报通过</span>
+         <span class="complaint-denied" @click="dealWithComplaint(index,2)">举报失败</span>
+       </li>
+     </ul>
+   </modal>
 </div>
 </template>
 
@@ -76,11 +90,14 @@
 import asyncDataStatus from "@/mixins/asyncDataStatus";
 import $api from '../api/index.js'
 import {countObjectProperties} from '../utils/index.js'
+import complaint from '../api/complaint.js';
   export default {
       mixins: [asyncDataStatus],
       data() {
         return {
-          userList: []
+          userList: [],
+          complaintsCash:[],
+          cashedPost:[]
         }
       },
       created(){
@@ -90,17 +107,65 @@ import {countObjectProperties} from '../utils/index.js'
           })
       },
       filters: {
-        "countObjectProperties": countObjectProperties
+        "countObjectProperties": countObjectProperties,
+         complaintStatus(status) {
+          if(status == 0 ) return "初始化"
+          return status == 1?"举报成功":"举报失败"
+        }
       },
       methods: {
         getData($event) {
-          console.log($event)
+          let user = this.userList[$event.target.dataset.index];
+          let complaints = user.complaints;
+          // if(Object.prototype.toString.call(complaints) == "[object Array]") return;
+          let ids= Object.keys(complaints).map((id)=>{
+            return id;
+          })
+          $api.complaints.getComplaintByIds(ids).then(res=>{
+            let data =res.map(item=>item.data)
+            this.complaintsCash = data;
+            let postIds = data.map(complaint=>{
+              return complaint.postId;
+            })
+
+            this.getPosts(postIds)
+            this.showDialog()
+          })
+        },
+        showDialog(){
+           this.$modal.show('complaints-dialog');
+        },
+        getPosts(ids){
+          $api.posts.getRepliesByReplyIds({ids}).then(res=>{//得到
+            let post = res.map(snapshot=>{
+              return snapshot.val()
+            })
+            this.cashedPost =  post
+          })
+        },
+        dealWithComplaint(index,status){
+          let complaint = this.complaintsCash[index];
+          complaint.status = status;
+          complaint.comfirmed_at =  Math.floor(Date.now()/1000)
+          complaint.comfirmed_By =  this.$store.state.auth.authId;
+          $api.complaints.dealWithComplaint(this.complaintsCash[index]).then(()=>{
+             this.$modal.hide('complaints-dialog');
+          })
         }
       },
   }
 </script>
 
 <style scoped>
+.complaint-accepted{
+  @apply my-1 mx-2 bg-red-600 text-white ;
+}
+.complaint-denied{
+   @apply my-1 mx-2 bg-gray-600 text-white ;
+}
+.show{
+  @apply block h-40;
+}
 .complaint{
   @apply text-sm text-red-600;
 }

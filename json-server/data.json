@@ -87,9 +87,13 @@
         {
           "time": "2021-05-06 20:49",
           "amount": 3
+        },
+        {
+          "time": "2021-05-08 18:50",
+          "amount": 3
         }
       ],
-      "points": 14
+      "points": 17
     },
     {
       "id": 2,
@@ -116,9 +120,13 @@
         {
           "time": "2021-05-07 18:07",
           "amount": 3
+        },
+        {
+          "time": "2021-05-08 18:03",
+          "amount": 3
         }
       ],
-      "points": 6,
+      "points": 9,
       "id": 3
     }
   ],
@@ -127,9 +135,11 @@
       "userId": "7lRUpl3pCYUEi1B1fvsDV0wLkNJ3",
       "postId": "-KvgjI6bfbWYlbYV5nds",
       "timestamp": 1620400739,
-      "status": 0,
+      "status": 2,
       "reason": "与游戏无关,谩骂，歧视，侮辱,垃圾广告,出格的色情，暴力",
-      "id": 2
+      "id": 2,
+      "comfirmed_at": 1620467881,
+      "comfirmed_By": "7lRUpl3pCYUEi1B1fvsDV0wLkNJ3"
     }
   ]
 }

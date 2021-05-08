@@ -89,9 +89,6 @@ export default {
     authUser(state, getters, rootState, rootGetters) {
       // return rootState
       return state.authId ? rootGetters['users/usersWithId'].find(user => user.id === state.authId) : null;
-    },
-    getPoint() {
-
     }
   },
   namespaced: true

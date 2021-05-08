@@ -7,6 +7,12 @@ export default {
   getComplaintById(id) {
     return Vue.prototype.$axios.get(`/complaints/${id}`);
   },
+  getComplaintByIds(ids) {
+   return  Promise.all(ids.map(id=> Vue.prototype.$axios.get(`/complaints/${id}`)))
+  },
+  dealWithComplaint(complaint) {
+    return Vue.prototype.$axios.patch(`/complaints/${complaint.id}`, complaint)
+  },
   getComplaintByPostId(PostId) {
     return Vue.prototype.$axios.get(`/complaints?PostId=${PostId}`);
   },
